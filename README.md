@@ -16,6 +16,31 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Mock API
+
+The mock API lives in [mock-api](mock-api) and serves course data on port 3005.
+
+Run it from the repo root with:
+
+```bash
+npm run mock-api
+```
+
+Or run it directly from the package folder:
+
+```bash
+cd mock-api
+npm install
+npm start
+```
+
+API endpoints:
+
+- `GET /courses`
+- `GET /courses/:id`
+- `GET /categories`
+- `GET /categories/:category/courses`
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
