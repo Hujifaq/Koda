@@ -6,6 +6,9 @@
   --foreground: #000000;
   --transition-stroke-1: #ffea28;
   --transition-stroke-2: #a67bff;
+  --base-100: #fafaf0;
+  --base-200: #deded5;
+  --base-500: #0f0f0fff;
 }
 
 @theme inline {
@@ -28,7 +31,7 @@ body {
 }
 
 html {
-  scroll-behavior: smooth;
+  /* removed scroll-behavior: smooth as it violently conflicts with Lenis smooth scroll */
 }
 
 

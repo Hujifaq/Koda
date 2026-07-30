@@ -5,6 +5,7 @@ import "devicon/devicon.min.css";
 import { TransitionProvider } from "./providers/TransitionProvider";
 import { LenisProvider } from "./providers/LenisProvider";
 
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -33,8 +34,7 @@ export default function RootLayout({
         <LenisProvider>
           <TransitionProvider>{children}</TransitionProvider>
         </LenisProvider>
-
-
+        
       </body>
     </html>
   );

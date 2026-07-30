@@ -10,6 +10,7 @@ import { Footer } from "../components/Footer";
 import { JellyCursor } from "../components/JellyCursor";
 import TextGradientScroll from "../components/TextGradientScroll";
 import SliderSection from "../components/SliderSection";
+import SvgDraw from "../components/SvgDraw";
 
 // Dynamically import ZoomParallax to avoid SSR issues with framer-motion
 const ZoomParallaxSection = dynamic(() => import("../components/ZoomParallax"), { ssr: false });
@@ -109,7 +110,7 @@ export default function CareersPage() {
      
       <div className="sticky top-0 w-full h-screen flex flex-col z-0 overflow-hidden bg-[#f5f4ee]">
         
-        {/* FULL SCREEN MASK LAYER */}
+        
         <div 
           ref={maskContainerRef}
           className="absolute inset-0 z-20 pointer-events-none bg-[#6c6bc2] flex flex-col overflow-hidden"
@@ -118,7 +119,7 @@ export default function CareersPage() {
             "--mask-radius": "0px"
           } as any}
         >
-          {/* Fake Navbar to perfectly match layout spacing */}
+         
           <div className="opacity-0"><Navbar /></div>
           
           <div className="flex-1 flex flex-col items-center justify-center relative w-full px-6">
@@ -128,11 +129,7 @@ export default function CareersPage() {
                   We are
                 </div>
               </div>
-              <div className="overflow-hidden pb-2 md:pb-4 pointer-events-none">
-                <div ref={maskTextRef} className="text-[8rem] md:text-[16rem] font-bold leading-[0.9] transform origin-bottom-left text-gray-700">
-                  Teacher
-                </div>
-              </div>
+              
             </div>
             {/* Fake Subtext */}
             <div className="mt-6 md:mt-10 max-w-md mx-auto text-[15px] md:text-[18px] opacity-0 pointer-events-none">
@@ -148,16 +145,7 @@ export default function CareersPage() {
 
           {/* Big Heading Text */}
           <div 
-            className="text-center font-medium tracking-tight text-[#1a1a1a] leading-[1.05] flex flex-col items-center relative"
-            onMouseEnter={() => {
-              gsap.to(maskContainerRef.current, { "--mask-radius": "300px", duration: 0.9, ease: "elastic.out(1, 0.6)" });
-              gsap.to("#jelly-cursor", { opacity: 0, duration: 0.1 });
-            }}
-            onMouseLeave={() => {
-              gsap.to(maskContainerRef.current, { "--mask-radius": "0px", duration: 0.5, ease: "back.in(1.2)" });
-              gsap.to("#jelly-cursor", { opacity: 1, duration: 0.3, delay: 0.1 });
-            }}
-          >
+            className="text-center font-medium tracking-tight text-[#1a1a1a] leading-[1.05] flex flex-col items-center relative" >
             <div className="overflow-hidden pb-2 md:pb-4 pointer-events-none">
               <div ref={text1Ref} className="text-[4rem] md:text-[8rem] transform origin-bottom-left">
                 We are
@@ -240,6 +228,7 @@ export default function CareersPage() {
         {/* SWIPER SLIDER SECTION */}
       <SliderSection />
       </div>
+      <SvgDraw />
 
      
 

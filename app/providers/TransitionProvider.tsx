@@ -4,12 +4,18 @@ import { TransitionRouter } from "next-transition-router";
 
 import gsap from "gsap";
 
+// Returns true on touch/mobile devices (client-side only)
+const isMobileDevice = () =>
+  typeof window !== "undefined" &&
+  ("ontouchstart" in window || window.matchMedia("(hover: none)").matches);
+
 export function TransitionProvider({ children }: { children: React.ReactNode }) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const pathsRef = useRef<SVGPathElement[]>([]);
 
   useEffect(() => {
-    if (!svgRef.current) return;
+
+    if (isMobileDevice() || !svgRef.current) return;
     pathsRef.current = Array.from(svgRef.current.querySelectorAll("path"));
 
     pathsRef.current.forEach((path) => {
@@ -21,55 +27,51 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
 
   return (
     <TransitionRouter auto
-    leave={(next) => {
-        const tl = gsap.timeline({
-            onComplete : next
-        });
+      leave={(next) => {
+        // On mobile, skip the SVG animation entirely to avoid the draw→reset flash
+        if (isMobileDevice()) {
+          next();
+          return () => { };
+        }
 
-        pathsRef.current.forEach((path) => {
-            tl.to(path, {
-                strokeDashoffset: 0,
-                attr:{
-                    "stroke-width": 700
-                },
-                duration : 1,
-                ease : "power1.inOut"
-            },
-            0,
-        
-        
-        
-        );
-    
-    });
-
-    return () => tl.kill();
-
-
-
-    }}
-    enter={(next)=>{
         const tl = gsap.timeline({ onComplete: next });
 
-        pathsRef.current.forEach((path)=>{
-            const length = path.getTotalLength();
-            tl.to(path,{
-                strokeDashoffset: -length,
-                attr: {"stroke-width": 200},
-                duration : 1,
-                ease: "power1.inOut",
-                onComplete: () => {
-                    gsap.set(path, {
-                        strokeDashoffset: length,
-                    });
-                },
-            }, 0,
-        );
-            
+        pathsRef.current.forEach((path) => {
+          tl.to(path, {
+            strokeDashoffset: 0,
+            attr: { "stroke-width": 700 },
+            duration: 1,
+            ease: "power1.inOut",
+          }, 0);
         });
-        return() => tl.kill();
-    }}
-    
+
+        return () => tl.kill();
+      }}
+      enter={(next) => {
+        // On mobile, skip the SVG animation entirely
+        if (isMobileDevice()) {
+          next();
+          return () => { };
+        }
+
+        const tl = gsap.timeline({ onComplete: next });
+
+        pathsRef.current.forEach((path) => {
+          const length = path.getTotalLength();
+          tl.to(path, {
+            strokeDashoffset: -length,
+            attr: { "stroke-width": 200 },
+            duration: 1,
+            ease: "power1.inOut",
+            onComplete: () => {
+              gsap.set(path, { strokeDashoffset: length });
+            },
+          }, 0);
+        });
+
+        return () => tl.kill();
+      }}
+
     >
       <div className="transition-svg">
         <svg

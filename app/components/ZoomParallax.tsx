@@ -6,35 +6,16 @@ import { useScroll, useTransform, motion } from "framer-motion";
 
 // Stock Unsplash images — education/learning themed
 const IMAGES = [
-  "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200&q=80",
-  "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=1200&q=80",
-  "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&q=80",
-  "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
-  "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1000&q=80",
-  "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=800&q=80",
-  "https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800&q=80",
+  "https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1773828948581-5b50c6ee17a2?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1690788210614-9052cffd8a14?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1549692520-acc6669e2f0c?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 ];
 
-/**
- * ZoomParallax — Olivier Larose tutorial implementation.
- *
- * KEY CENTERING APPROACH:
- * Every image container uses `left: 50%; top: 50%` (anchors to viewport center),
- * then `transform: translate(calc(-50% + dxvw), calc(-50% + dyvh))` offsets
- * it from that center point.
- *
- * Image 3 (middle) uses dx=0, dy=0 → always EXACTLY centered at 50vw/50vh
- * on every screen resolution.
- *
- * All other images are offset from that center point, maintaining
- * their relative positions regardless of viewport size.
- *
- * Grid layout (matches reference image):
- *
- *   [1 tall left]  [2 wide top               ]
- *   [1 tall left]  [3 mid CENTER]  [4 mid right]
- *                  [5 wide btm L]  [6 btm ctr]  [7 btm R]
- */
+
 export default function ZoomParallax() {
   const container = useRef<HTMLDivElement>(null);
 
@@ -43,16 +24,6 @@ export default function ZoomParallax() {
     offset: ["start start", "end end"],
   });
 
-  /**
-   * Two-phase scroll:
-   *   Phase 1 [0 → 0.75]: images zoom in towards their final scale
-   *   Phase 2 [0.75 → 1.0]: scale is HELD flat → "pinned fullscreen" feel
-   *
-   * Center image (27.3vw × 25vh) needs exactly scale=4 to fill 100vh viewport.
-   * Outer images use higher scales so they zoom past the viewport edges.
-   */
-
-  // Center image: reaches fullscreen at 75% scroll, stays pinned after
   const scaleCenter = useTransform(scrollYProgress, [0, 0.75, 1], [1, 4, 4]);
 
   // Adjacent images: slightly larger to exit viewport as center fills in
@@ -64,14 +35,7 @@ export default function ZoomParallax() {
   // Corner/small images: fastest zoom
   const scaleCorner = useTransform(scrollYProgress, [0, 0.75, 1], [1, 8, 8]);
 
-  /**
-   * Each image is positioned via:
-   *   left: 50%, top: 50%   ← anchors to viewport center
-   *   transform: translate(calc(-50% + dx), calc(-50% + dy))
-   *
-   * dx / dy = offset of the image CENTER from the VIEWPORT CENTER (in vw/vh).
-   * Image 3 has dx=0, dy=0 → always perfectly centered.
-   */
+  
   const pictures = [
     // ── 1: Large portrait square, LEFT side spanning rows 1–2 ──
     {

@@ -58,8 +58,15 @@ export default function SliderSection() {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
 
-  // Magnetic button hover effect
+  // Magnetic button hover effect (desktop only)
   useGSAP(() => {
+    // Skip magnetic effect on touch/mobile devices
+    const isTouchDevice =
+      typeof window !== "undefined" &&
+      (window.matchMedia("(hover: none)").matches || "ontouchstart" in window);
+
+    if (isTouchDevice) return;
+
     const buttons = [prevRef.current, nextRef.current];
 
     buttons.forEach((btn) => {

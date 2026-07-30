@@ -12,6 +12,10 @@ export default function TextGradientScroll({ text }: { text: string }) {
   useGSAP(() => {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Initialize opacity via GSAP so it fully owns the property.
+    // Avoid using Tailwind's transition-opacity which conflicts with scrub.
+    gsap.set(wordsRef.current, { opacity: 0.2 });
+
     gsap.to(wordsRef.current, {
       opacity: 1,
       ease: "none",
@@ -37,7 +41,7 @@ export default function TextGradientScroll({ text }: { text: string }) {
               ref={(el) => {
                 wordsRef.current[i] = el;
               }}
-              className="opacity-20 transition-opacity duration-75"
+              className="inline"
             >
               {word}{" "}
             </span>

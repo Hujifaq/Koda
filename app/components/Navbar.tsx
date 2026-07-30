@@ -71,7 +71,7 @@ export function Navbar() {
   const navLinks = [
     { label: "Courses", href: "/courses" },
     { label: "Careers", href: "/careers" },
-    { label: "FAQ's", href: "/#faq" },
+    { label: "FAQ's", href: "/faq" },
     { label: "Contact", href: "/contact" }
   ];
   const [isOpen, setIsOpen] = useState(false);
@@ -216,7 +216,7 @@ export function Navbar() {
           <KodaLogo />
         </Link>
 
-        {/* Nav centered on the page */}
+      
         <nav className="hidden md:flex flex-1 justify-center items-center gap-1 lg:gap-5 text-[14px] lg:text-[15px] mx-4">
           {navLinks.map((link) => (
             <Link
