@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactLenis, useLenis } from "lenis/react";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
@@ -57,7 +57,9 @@ export function LenisProvider({ children }: { children: ReactNode }) {
       lerp: 0.1,
       duration: 1.2
     }}>
-      <ScrollManager />
+      <Suspense fallback={null}>
+        <ScrollManager />
+      </Suspense>
       {children}
     </ReactLenis>
   );
