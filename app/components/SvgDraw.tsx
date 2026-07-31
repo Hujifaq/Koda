@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useRef } from 'react'
 import Image from 'next/image'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -13,9 +13,16 @@ function SvgDraw() {
 
     useLenis(ScrollTrigger.update);
 
+    const containerRef = useRef<HTMLElement>(null);
+
     useGSAP(() => {
-        const path = document.getElementById("stroke-path") as SVGPathElement | null;
-        if (path) {
+        if (!containerRef.current) return;
+
+        // Grab elements only within this component to avoid cross-page transition conflicts
+        const path = containerRef.current.querySelector("#stroke-path") as SVGPathElement | null;
+        const spotlightSection = containerRef.current.querySelector(".spotlight");
+
+        if (path && spotlightSection) {
             const pathLength = path.getTotalLength();
             path.style.strokeDasharray = `${pathLength}`;
             path.style.strokeDashoffset = `${pathLength}`;
@@ -24,23 +31,24 @@ function SvgDraw() {
                 strokeDashoffset: 0,
                 ease: 'none',
                 scrollTrigger: {
-                    trigger: ".spotlight",
+                    trigger: spotlightSection,
                     start: "top 20%",
-                    end: "80% bottom",
+                    end: "90% bottom",
                     scrub: true,
                 },
             });
         }
 
-        const textPath = document.querySelector('.anim-text-path');
-        if (textPath) {
-            
+        const textPath = containerRef.current.querySelector('.anim-text-path');
+        const textPathSection = containerRef.current.querySelector('.text-path-section');
+
+        if (textPath && textPathSection) {
             const proxy = { offset: 120 };
             gsap.to(proxy, {
                 offset: -20,
                 ease: "none",
                 scrollTrigger: {
-                    trigger: ".text-path-section",
+                    trigger: textPathSection,
                     start: "top bottom",
                     end: "bottom top",
                     scrub: true,
@@ -59,7 +67,8 @@ function SvgDraw() {
                     width: '2rem',
                     height: '2rem',
                     duration: 1.2,
-                    ease: 'elastic.out(1, 0.3)'
+                    ease: 'elastic.out(1, 0.3)',
+                    overwrite: 'auto'
                 });
             }
         };
@@ -72,12 +81,13 @@ function SvgDraw() {
                     width: '1rem',
                     height: '1rem',
                     duration: 0.5,
-                    ease: 'power2.out'
+                    ease: 'power2.out',
+                    overwrite: 'auto'
                 });
             }
         };
 
-        const container = document.querySelector('.svgdraw-container');
+        const container = containerRef.current;
         let mouseX = -1000;
         let mouseY = -1000;
         let isHovering = false;
@@ -114,21 +124,34 @@ function SvgDraw() {
         window.addEventListener('mousemove', onMouseMove);
         window.addEventListener('scroll', onScroll, { passive: true });
 
+        // Ensure triggers are properly sized slightly after load to account for image pop-in
+        const timeout = setTimeout(() => {
+            ScrollTrigger.refresh();
+        }, 500);
+
+        // Add a ResizeObserver to perfectly sync GSAP whenever the layout shifts (e.g. images loading, page transitions)
+        const resizeObserver = new ResizeObserver(() => {
+            ScrollTrigger.refresh();
+        });
+        resizeObserver.observe(containerRef.current);
+
         return () => {
             window.removeEventListener('mousemove', onMouseMove);
             window.removeEventListener('scroll', onScroll);
+            clearTimeout(timeout);
+            resizeObserver.disconnect();
         };
-    }, { dependencies: [] });
+    }, { scope: containerRef });
 
 
     return (
-        <main className='relative bg-[#f5f4ee] z-20 svgdraw-container'>
+        <main ref={containerRef} className='relative bg-[#f5f4ee] z-20 svgdraw-container'>
             <div className='bg-[#f5f4ee] w-full min-h-screen rounded-t-3xl'>
                 <section className="relative w-full h-[100svh] p-8 bg-[var(--base-200)] flex justify-center items-center overflow-hidden">
                     <h1 className="w-[60%] max-[1000px]:w-full text-center font-medium leading-[1.1] text-[4rem] max-[1000px]:text-[2rem] tracking-[-0.1rem] max-[1000px]:tracking-normal">Design to keep information clear and connected</h1>
                 </section>
 
-                <section className="relative z-0 w-full h-full p-8 flex flex-col gap-40 max-[1000px]:gap-20 overflow-hidden spotlight">
+                <section className="relative z-0 w-full p-8 flex flex-col gap-40 max-[1000px]:gap-20 spotlight">
                     <div className="relative z-10 flex flex-col items-center gap-12">
                         <div className="w-[80%] max-[1000px]:w-full flex justify-center">
                             <Image src="/1.svg" alt="image1" width={1000} height={800} className="w-full h-auto object-contain bg-transparent max-[1000px]:scale-[2] max-[1000px]:mt-14" />
@@ -179,7 +202,7 @@ function SvgDraw() {
                     </div>
                 </section>
 
-                <section className="relative w-full h-[100svh] bg-[var(--base-200)] flex justify-center items-center overflow-hidden text-path-section">
+                <section className="relative w-full h-[100svh] bg-[var(--base-200)] flex justify-center items-center overflow-hidden text-path-section rounded-3xl">
                     <svg className="w-full max-w-[1400px] h-auto overflow-visible min-w-[1000px]" viewBox="0 0 1000 300">
                         <path 
                             id="text-curve" 
@@ -199,8 +222,6 @@ function SvgDraw() {
                         </text>
                     </svg>
                 </section>
-
-
 
             </div>
         </main>

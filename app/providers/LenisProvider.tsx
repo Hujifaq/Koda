@@ -10,38 +10,41 @@ function ScrollManager() {
   const searchParams = useSearchParams();
   const lenis = useLenis();
 
-  // Prevent browser from jerking the scroll position on back/forward, which freezes Lenis
+  // Prevent browser from jerking the scroll position on back/forward
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.history.scrollRestoration = "manual";
     }
   }, []);
 
-  // Refresh GSAP ScrollTrigger after a route change completes
+  // Handle route changes
   useEffect(() => {
     if (!lenis) return;
 
-    // 1. Instantly reset to the top of the new page so you don't spawn at the bottom
+    // Reset scroll to top on route change
     lenis.scrollTo(0, { immediate: true });
+    
+    // Clear GSAP's scroll memory so it stops trying to jump back to the old page's scroll spot
+    ScrollTrigger.clearScrollMemory("manual");
+    window.scrollTo(0, 0);
 
-    // 2. Tell Lenis to recalculate its internal max-height whenever GSAP refreshes its spacers
-    const onRefresh = () => {
+    // Because next-transition-router takes 1-2 seconds to fully swap the DOM,
+    // we continually force GSAP and Lenis to recalculate their heights during this window.
+    const intervalId = setInterval(() => {
+      ScrollTrigger.refresh();
       lenis.resize();
-    };
-    ScrollTrigger.addEventListener("refresh", onRefresh);
+    }, 250);
 
-    // 3. Force GSAP to refresh slightly after the new page mounts (which triggers the resize above)
-    const timeout1 = setTimeout(() => {
+    // Stop checking after 2.5 seconds (when the transition is 100% done)
+    const timeoutId = setTimeout(() => {
+      clearInterval(intervalId);
       ScrollTrigger.refresh();
-    }, 100);
-    const timeout2 = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 500); // Safety backup for slow images
+      lenis.resize();
+    }, 2500);
 
     return () => {
-      ScrollTrigger.removeEventListener("refresh", onRefresh);
-      clearTimeout(timeout1);
-      clearTimeout(timeout2);
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
     };
   }, [pathname, searchParams, lenis]);
 

@@ -3,6 +3,7 @@ import { useRef, useEffect } from "react"
 import { TransitionRouter } from "next-transition-router";
 
 import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 // Returns true on touch/mobile devices (client-side only)
 const isMobileDevice = () =>
@@ -14,7 +15,8 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
   const pathsRef = useRef<SVGPathElement[]>([]);
 
   useEffect(() => {
-
+    gsap.registerPlugin(ScrollTrigger);
+    
     if (isMobileDevice() || !svgRef.current) return;
     pathsRef.current = Array.from(svgRef.current.querySelectorAll("path"));
 
@@ -48,13 +50,24 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
         return () => tl.kill();
       }}
       enter={(next) => {
+        // Force layout recalculations for GSAP and Lenis now that the new page is mounted
+        ScrollTrigger.refresh();
+        window.dispatchEvent(new Event('resize'));
+        
         // On mobile, skip the SVG animation entirely
         if (isMobileDevice()) {
           next();
           return () => { };
         }
 
-        const tl = gsap.timeline({ onComplete: next });
+        const tl = gsap.timeline({ 
+          onComplete: () => {
+            // Also refresh at the very end just in case any lingering layout shifts occur
+            ScrollTrigger.refresh();
+            window.dispatchEvent(new Event('resize'));
+            next();
+          } 
+        });
 
         pathsRef.current.forEach((path) => {
           const length = path.getTotalLength();

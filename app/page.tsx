@@ -14,6 +14,7 @@ import { FAQ } from "./components/FAQ";
 import { CTABanner } from "./components/CTABanner";
 import { Footer } from "./components/Footer";
 import Link from "next/link";
+import RotatingText from "./components/RotatingText";
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -92,7 +93,10 @@ function Hero() {
       );
     }
 
-    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
+    return () => {
+      // Intentionally empty: Do NOT kill all ScrollTriggers globally here, 
+      // as it destroys the triggers of the NEXT page during transition router cross-fades!
+    };
   }, []);
 
   return (
@@ -100,11 +104,22 @@ function Hero() {
       <div className="relative z-10 flex max-w-2xl flex-col items-start text-left">
         {/* Heading */}
         <h1 className="text-[4rem] font-semibold leading-[1.12] tracking-tight">
-          Invest in a better future,
+          Level up your skills,
           <br />
-          invest in{" "}
+          master{" "}
           <span className="relative inline-block">
-            yourself
+            <RotatingText
+              texts={['React', 'Next.js', 'coding', 'yourself']}
+              mainClassName="inline-flex overflow-hidden text-[#03a5fc]"
+              staggerFrom="last"
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "-120%" }}
+              staggerDuration={0.025}
+              splitLevelClassName="overflow-hidden"
+              transition={{ type: "spring", damping: 30, stiffness: 400 }}
+              rotationInterval={3000}
+            />
             <svg
               className="absolute -bottom-2 left-0 w-full"
               xmlns="http://www.w3.org/2000/svg"
@@ -121,14 +136,12 @@ function Hero() {
                 strokeLinecap="round"
               />
             </svg>
-          </span>.
+          </span>
         </h1>
 
         {/* Subtitle */}
         <p className="mt-7 max-w-lg text-[15px] leading-relaxed text-zinc-900">
-          Offering comprehensive online finance courses designed to empower
-          individuals with the knowledge and skills needed to make informed
-          financial decisions.
+          The most powerful tool you have is your own potential. We provide the industry-grade coding courses and hands-on projects to help you build the software of tomorrow, step by step.
         </p>
 
         {/* CTA */}

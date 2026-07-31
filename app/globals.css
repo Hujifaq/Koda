@@ -22,6 +22,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-inter), Arial, Helvetica, sans-serif;
   letter-spacing: -0.01em;
+  overflow-x: hidden;
 }
 
 
