@@ -171,7 +171,8 @@ export default function CoursesPage() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch("http://localhost:3005/courses");
+        // ยิง api
+        const res = await fetch("/api/courses");
         if (!res.ok) throw new Error("Failed to fetch");
         const data: Course[] = await res.json();
         setCourses(data);
