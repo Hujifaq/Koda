@@ -9,27 +9,27 @@ const faqs = [
     {
         question: "How long does the coding bootcamp take?",
         answer: "Our standard full-time bootcamp runs for 12 weeks, Monday through Friday. We also offer a part-time program that extends over 24 weeks, perfect for those balancing work or other commitments.",
-        color: "#fce823" // Yellow
+        color: "#fce823" 
     },
     {
         question: "Do I need prior coding experience?",
         answer: "Not at all! Our curriculum is designed to take you from a complete beginner to a job-ready developer. We start with the fundamentals before diving into advanced topics.",
-        color: "#7c5cff" // Purple
+        color: "#7c5cff" 
     },
     {
         question: "What kind of support is available?",
         answer: "You'll have access to 1-on-1 mentorship, daily Q&A sessions, a dedicated slack channel, and lifelong career support including resume reviews and mock interviews.",
-        color: "#00afa6" // Teal
+        color: "#00afa6" 
     },
     {
         question: "Is there a job guarantee?",
         answer: "While we cannot legally guarantee a job, our career services team works tirelessly with you until you are hired. Over 90% of our graduates find employment within 6 months.",
-        color: "#9C56FF" // Light Purple
+        color: "#9C56FF"
     },
     {
         question: "Can I switch from full-time to part-time?",
         answer: "Yes! We understand that life happens. If you find the full-time pace too intense, you can request a transfer to the part-time cohort within the first 4 weeks.",
-        color: "#fce823" // Yellow
+        color: "#fce823"
     }
 ];
 
@@ -92,14 +92,14 @@ function FAQRow({ faq, isOpen, onClick }: { faq: typeof faqs[0], isOpen: boolean
             onMouseLeave={handleMouseLeave}
             onClick={onClick}
         >
-            {/* Colored Background Card */}
+           
             <div 
                 ref={bgRef}
                 className="absolute inset-0 z-0 origin-bottom scale-y-0"
                 style={{ backgroundColor: faq.color }}
             ></div>
             
-            {/* Content */}
+        
             <div className="relative z-10 flex flex-col pointer-events-none">
                 <div className="flex items-center justify-between gap-8">
                     <h2 

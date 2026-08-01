@@ -25,7 +25,7 @@ const avatars = [
   "https://images.unsplash.com/photo-1780676384896-6ff19e8631d1?q=80&w=719&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 ];
 
-/* ── Hero ─────────────────────────────────────────────── */
+
 function Hero() {
   const pathRef = useRef<SVGPathElement>(null);
   const arcRef = useRef<SVGPathElement>(null);
@@ -36,7 +36,7 @@ function Hero() {
   const badgeRightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    /* ── Underline draw ── */
+   
     if (pathRef.current) {
       const length = pathRef.current.getTotalLength();
       gsap.set(pathRef.current, { strokeDasharray: length, strokeDashoffset: length });
@@ -138,12 +138,12 @@ function Hero() {
           </span>
         </h1>
 
-        {/* Subtitle */}
+       
         <p className="mt-7 max-w-lg text-[15px] leading-relaxed text-zinc-900">
           Start writing code today. We've built practical, hands-on courses that actually teach you how to build real apps, not just copy-paste tutorials.
         </p>
 
-        {/* CTA */}
+        
         <Link href={"/courses"}
           type="button"
           className="mt-9 rounded-xl bg-black/95 px-5 py-3 text-sm font-medium text-white hover:translate-y-[-2px] transition-all duration-200 cursor-pointer"
@@ -214,7 +214,7 @@ function Hero() {
           </g>
         </svg>
 
-        {/* Person Image */}
+       
         <Image
           src="/person1.svg"
           alt="Invest in yourself"
@@ -233,7 +233,7 @@ function Hero() {
           </div>
         </div>
 
-        {/* Right Floating Badge */}
+       
         <div ref={badgeRightRef} className="absolute top-12 -right-4 z-20 flex items-center gap-3 bg-white px-4 py-2.5 rounded-full shadow-lg border border-gray-100">
           <div className="bg-[#ff4f4f] p-2 rounded-full text-white">
             <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="14" width="14" xmlns="http://www.w3.org/2000/svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -248,7 +248,7 @@ function Hero() {
   );
 }
 
-/* ── Page ─────────────────────────────────────────────── */
+
 export default function Home() {
   return (
     <div className="bg-[#fcfbf7] text-black">
@@ -262,7 +262,7 @@ export default function Home() {
         <Features />
         <FAQ />
         <CTABanner />
-        {/* Footer uses Olivier Larose sticky reveal: clipPath + position fixed */}
+       
         <Footer />
       </main>
     </div>

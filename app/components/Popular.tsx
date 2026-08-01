@@ -77,7 +77,7 @@ export function Popular() {
           courses.map((course) => (
             <div key={course.id} className="bg-white rounded-[2rem] p-4 pb-6 flex flex-col shadow-sm border border-gray-100/50 hover:shadow-md transition-shadow group">
               
-              {/* Image Block from API */}
+              
               <div className="relative w-full aspect-[4/3] rounded-[1.5rem] overflow-hidden mb-6 bg-gray-100">
                 <Image
                   src={course.image}

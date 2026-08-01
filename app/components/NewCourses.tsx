@@ -39,7 +39,7 @@ export function NewCourses() {
         const res = await fetch("https://course-api-983j.onrender.com/courses");
         if (!res.ok) throw new Error("Failed to fetch");
         const data: Course[] = await res.json();
-        // Pick 3 random courses (different shuffle from Popular)
+        
         const shuffled = data.sort(() => 0.5 - Math.random());
         setCourses(shuffled.slice(0, 3));
       } catch (error) {
@@ -56,7 +56,7 @@ export function NewCourses() {
       {/* Header */}
       <div className="flex items-end justify-between mb-12">
         <h2 className="text-[2.5rem] md:text-[3rem] leading-tight font-medium tracking-tight">
-          New courses on Filearn.
+          New courses on Koda.
         </h2>
         <Link href="/courses" className="flex items-center gap-2 text-sm font-semibold hover:bg-black/5 p-3 rounded-2xl transition-all duration-200 whitespace-nowrap">
           View all <span className="bg-black text-white rounded-full p-1 text-[10px]"><FiArrowRight /></span>
