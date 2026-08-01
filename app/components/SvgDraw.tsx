@@ -203,14 +203,14 @@ function SvgDraw() {
                 </section>
 
                 <section className="relative w-full h-[100svh] bg-[var(--base-200)] flex justify-center items-center overflow-hidden text-path-section rounded-3xl">
-                    <svg className="w-full max-w-[1400px] h-auto overflow-visible min-w-[1000px]" viewBox="0 0 1000 300">
+                    <svg className="w-full max-w-[1400px] h-auto overflow-visible" viewBox="0 0 1000 300">
                         <path 
                             id="text-curve" 
                             d="M -200 150 C 200 450, 800 -150, 1200 150" 
                             fill="none" 
                             stroke="transparent" 
                         />
-                        <text className="fill-black font-semibold tracking-tight uppercase" fontSize="38" dominantBaseline="middle">
+                        <text className="fill-black font-semibold tracking-tight uppercase text-[2.2rem] sm:text-[2.2rem] md:text-[2.2rem] lg:text-[2.5rem]" dominantBaseline="middle">
                             <textPath 
                                 className="anim-text-path"
                                 href="#text-curve" 
