@@ -6,13 +6,18 @@ import Image from "next/image";
 import { FiArrowUpRight } from "react-icons/fi";
 
 const footerLinks = {
-  Product: ["Courses", "Pricing", "Features", "Roadmap"],
-  Company: ["About us", "Careers", "Blog", "Press"],
-  Resources: ["Documentation", "Community", "Support", "Contact"],
-  Legal: ["Privacy Policy", "Terms of Service", "Cookie Policy"],
+  Navigation: [
+    { label: "Home", href: "/" },
+    { label: "Explore Courses", href: "/courses" }
+  ],
+  Account: [
+    { label: "Sign In", href: "/login" },
+    { label: "Create Account", href: "/signup" },
+    { label: "My Profile", href: "/profile" }
+  ]
 };
 
-const FOOTER_HEIGHT = 500;
+const FOOTER_HEIGHT = 400;
 
 export function Footer() {
   return (
@@ -54,26 +59,26 @@ export function Footer() {
                 Coding courses designed to empower individuals with the knowledge and skills needed to make informed decisions.
               </p>
               <Link
-                href="#"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-white border border-white/20 rounded-full px-5 py-2.5 w-fit hover:bg-white hover:text-black transition-all duration-200"
+                href="/signup"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-white border border-white/20 rounded-full px-5 py-2.5 w-fit hover:bg-[#7c5cff] hover:border-[#7c5cff] transition-all duration-200"
               >
                 Get started <FiArrowUpRight />
               </Link>
             </div>
 
             {/* Links */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16">
+            <div className="grid grid-cols-2 gap-8 md:gap-16">
               {Object.entries(footerLinks).map(([category, links]) => (
                 <div key={category} className="flex flex-col gap-4">
                   <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">{category}</h4>
                   <ul className="flex flex-col gap-3">
                     {links.map((link) => (
-                      <li key={link}>
+                      <li key={link.label}>
                         <Link
-                          href="#"
+                          href={link.href}
                           className="text-sm text-gray-300 hover:text-white transition-colors duration-200"
                         >
-                          {link}
+                          {link.label}
                         </Link>
                       </li>
                     ))}
@@ -84,15 +89,10 @@ export function Footer() {
           </div>
 
           {/* Bottom row */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/10 pt-6">
+          <div className="flex flex-col items-center justify-center border-t border-white/10 pt-6">
             <p className="text-xs text-gray-500">
               © {new Date().getFullYear()} Koda. All rights reserved.
             </p>
-            <div className="flex items-center gap-6 text-xs text-gray-500">
-              <Link href="#" className="hover:text-white transition-colors">Privacy</Link>
-              <Link href="#" className="hover:text-white transition-colors">Terms</Link>
-              <Link href="#" className="hover:text-white transition-colors">Cookies</Link>
-            </div>
           </div>
         </div>
       </div>

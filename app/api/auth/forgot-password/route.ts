@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import crypto from "crypto";
+// crypto for hashing na kub
 import { connectMongoDB } from "@/lib/mongodb";
 import User from "@/models/user";
 import { Resend } from "resend";

@@ -20,9 +20,9 @@ import RotatingText from "./components/RotatingText";
 gsap.registerPlugin(ScrollTrigger);
 
 const avatars = [
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face",
-  "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&fit=crop&crop=face",
+  "https://images.unsplash.com/photo-1783881210962-1119b54ce6a4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDJ8dG93SlpGc2twR2d8fGVufDB8fHx8fA%3D%3D",
+  "https://images.unsplash.com/photo-1785088559550-23875679b825?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDI4fHRvd0paRnNrcEdnfHxlbnwwfHx8fHw%3D",
+  "https://images.unsplash.com/photo-1780676384896-6ff19e8631d1?q=80&w=719&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 ];
 
 /* ── Hero ─────────────────────────────────────────────── */
@@ -94,8 +94,7 @@ function Hero() {
     }
 
     return () => {
-      // Intentionally empty: Do NOT kill all ScrollTriggers globally here, 
-      // as it destroys the triggers of the NEXT page during transition router cross-fades!
+    
     };
   }, []);
 
@@ -152,7 +151,7 @@ function Hero() {
           View courses
         </Link>
 
-        {/* Trusted by */}
+       
         <div className="mt-8 flex items-center gap-3">
           <div className="flex -space-x-2">
             {avatars.map((src, i) => (
@@ -177,16 +176,16 @@ function Hero() {
         </div>
       </div>
 
-      {/* Right Image (person1.svg) hidden on mobile */}
+      
       <div className="hidden md:flex relative w-full max-w-[500px] aspect-square items-center justify-center">
-        {/* Decorative SVG Arc Line behind person */}
+        
         <svg
           className="absolute inset-0 w-full h-full z-0"
           viewBox="0 0 500 500"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Large outer arc */}
+         
           <path
             ref={arcRef}
             d="M 80 460 A 260 260 0 1 1 460 250"
@@ -195,9 +194,9 @@ function Hero() {
             strokeLinecap="round"
             fill="none"
           />
-          {/* Inner filled circle background */}
+          
           <circle ref={circleRef} cx="250" cy="270" r="195" fill="#f0eae3" />
-          {/* Dotted pattern top-left */}
+          
           <g ref={dotsTopRef} opacity="0.5">
             {[0, 1, 2, 3, 4].map(row =>
               [0, 1, 2, 3, 4].map(col => (
@@ -205,7 +204,7 @@ function Hero() {
               ))
             )}
           </g>
-          {/* Dotted pattern bottom-right */}
+          
           <g ref={dotsBottomRef} opacity="0.5">
             {[0, 1, 2, 3, 4].map(row =>
               [0, 1, 2, 3, 4].map(col => (
@@ -223,7 +222,7 @@ function Hero() {
           className="object-contain z-10"
         />
 
-        {/* Left Floating Badge */}
+        
         <div ref={badgeLeftRef} className="absolute top-1/4 -left-4 z-20 flex items-center gap-3 bg-white px-4 py-2.5 rounded-full shadow-lg border border-gray-100">
           <div className="bg-[#00b574] p-2 rounded-full text-white">
             <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="14" width="14" xmlns="http://www.w3.org/2000/svg"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
