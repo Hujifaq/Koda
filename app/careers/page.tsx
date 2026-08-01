@@ -133,7 +133,7 @@ export default function CareersPage() {
             </div>
             {/* Fake Subtext */}
             <div className="mt-6 md:mt-10 max-w-md mx-auto text-[15px] md:text-[18px] opacity-0 pointer-events-none">
-              Koda is a global learning platform that helps individuals connect with real knowledge — in every field, and on their terms.
+              Koda is a community-driven platform where passionate individuals learn, write code, and build software that shapes the future.
             </div>
           </div>
         </div>
@@ -163,23 +163,19 @@ export default function CareersPage() {
             ref={subTextRef}
             className="mt-6 md:mt-10 text-center text-zinc-600 text-[15px] md:text-[18px] max-w-md mx-auto leading-relaxed z-10"
           >
-            Koda is a global learning platform that helps individuals connect with real knowledge — in every field, and on their terms.
+            Koda is a community-driven platform where passionate individuals learn, write code, and build software that shapes the future.
           </div>
 
         </div>
       </div>
 
-      {/* 
-        GREEN OVERLAPPING SECTION 
-        It sits in normal document flow below the 100vh sticky hero. 
-        As the user scrolls, it moves up (z-10) and overlaps the hero (z-0).
-      */}
+    
       <div className="relative z-10 w-full bg-[#6ee7b7] rounded-t-[40px] rounded-b-[40px] md:rounded-t-[60px] -mt-6 md:-mt-12 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]">
         
-        {/* ZOOM PARALLAX — fills 300vh inside the green section */}
+       
         
 
-        {/* MISSION CONTENT */}
+      
         <div ref={missionContainerRef} className="py-24 md:py-32 px-6 md:px-12 max-w-6xl mx-auto flex flex-col items-center text-center">
           <h2 className="mission-item text-[2.5rem] md:text-[4rem] font-bold text-[#1a4a1f] mb-8 leading-tight">
             Our <span className="relative inline-block">
@@ -197,26 +193,26 @@ export default function CareersPage() {
             </span>
           </h2>
           <p className="mission-item text-[#2a6631] text-[17px] md:text-[22px] leading-relaxed max-w-2xl mb-20 font-medium">
-            We believe that high-quality education should be accessible to everyone. Our platform breaks down barriers and opens doors to new opportunities.
+            We believe that learning to code shouldn't be confusing or isolating. Our platform breaks down complex concepts so you can focus on building.
           </p>
 
           <div className="grid md:grid-cols-3 gap-12 text-left w-full">
             <div className="mission-item flex flex-col gap-3 bg-white px-8 py-8 rounded-lg shadow-lg hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
-              <h3 className="text-xl font-bold text-[#163d1a]">Accessible Education</h3>
+              <h3 className="text-xl font-bold text-[#163d1a]">Learn by Doing</h3>
               <p className="text-[#2a6631] leading-relaxed">
-                We believe that high-quality education should be available to everyone, regardless of background or location.
+                We believe that the only way to master web development is to get your hands dirty building real, production-ready applications.
               </p>
             </div>
             <div className="mission-item flex flex-col gap-3 bg-white px-8 py-8 rounded-lg shadow-lg hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
-              <h3 className="text-xl font-bold text-[#163d1a]">Expert-Led Learning</h3>
+              <h3 className="text-xl font-bold text-[#163d1a]">Expert-Led Engineering</h3>
               <p className="text-[#2a6631] leading-relaxed">
-                Every course is crafted by industry professionals who bring real-world experience into every lesson.
+                Every course is crafted by senior software engineers who bring real-world production experience straight to your screen.
               </p>
             </div>
             <div className="mission-item flex flex-col gap-3 bg-white px-8 py-8 rounded-lg shadow-lg hover:-translate-y-2 hover:shadow-xl transition-all duration-300">
-              <h3 className="text-xl font-bold text-[#163d1a]">Community First</h3>
+              <h3 className="text-xl font-bold text-[#163d1a]">Developer Community</h3>
               <p className="text-[#2a6631] leading-relaxed">
-                Join a thriving community of learners and mentors. Grow together, share insights, and build connections.
+                Join a thriving community of developers. Review code together, share bugs (and fixes), and build a network for your tech career.
               </p>
             </div>
           </div>
@@ -224,7 +220,7 @@ export default function CareersPage() {
         <ZoomParallaxSection />
         
         {/* TEXT GRADIENT SCROLL SECTION */}
-        <TextGradientScroll text="Our mission is to make international research feel simple, efficient, and deeply human. We blend cultural intelligence with operational precision to deliver insights that move business forward. With a lean, expert-led model and a truly global network, we're not just here to manage research — we're here to help you make smarter decisions through deep, nuanced understanding." /> 
+        <TextGradientScroll text="Transform your ideas into reality. At Koda, we equip you with the modern development skills and practical experience needed to build the web of tomorrow. Whether you're landing your first junior role or scaling complex architectures, our platform provides the exact roadmap you need for a thriving tech career." /> 
         {/* SWIPER SLIDER SECTION */}
       <SliderSection />
       </div>

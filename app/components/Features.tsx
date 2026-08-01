@@ -59,28 +59,28 @@ export function Features() {
   const features = [
     {
       icon: <FiMessageCircle className="text-xl text-[#5b61d6]" />,
-      title: "Get instant chat support",
-      desc: "and guidance from our dedicated chat support team throughout your learning journey.",
+      title: "Get instant code reviews",
+      desc: "and debugging help from our dedicated mentors whenever you get stuck.",
     },
     {
       icon: <FiCloudOff className="text-xl text-[#5b61d6]" />,
-      title: "Access the course offline",
-      desc: "without needing internet, allowing you to learn anytime, anywhere, and at your own convenience.",
+      title: "Access courses offline",
+      desc: "Download high-quality video tutorials and code snippets to keep learning without an internet connection.",
     },
     {
       icon: <FiAward className="text-xl text-[#5b61d6]" />,
-      title: "Made by industry experts",
-      desc: "who curated the course content with their extensive knowledge and insights.",
+      title: "Built by senior engineers",
+      desc: "who designed the curriculum using best practices from top tech companies.",
     },
     {
       icon: <FiEye className="text-xl text-[#5b61d6]" />,
-      title: "Enjoy unlimited, lifetime access",
-      desc: "to course materials, empowering you to revisit and reinforce your knowledge at any time.",
+      title: "Unlimited, lifetime updates",
+      desc: "to course materials, ensuring you always stay up-to-date with the latest frameworks.",
     },
     {
       icon: <FiThumbsUp className="text-xl text-[#5b61d6]" />,
-      title: "Beginner-friendly courses",
-      desc: "that provide a supportive and easy-to-understand learning environment.",
+      title: "Beginner to Advanced paths",
+      desc: "providing a structured environment whether you're writing 'Hello World' or deploying microservices.",
     },
   ];
 
@@ -88,7 +88,7 @@ export function Features() {
     <section ref={containerRef} className="w-full max-w-7xl mx-auto px-6 py-24 ">
       <div className="flex flex-col items-center text-center mb-20 max-w-3xl mx-auto">
         <h2 className="feature-fade-up text-[2.5rem] md:text-[3.5rem] leading-[1.1] font-medium tracking-tight text-[#1a1a1a] mb-6">
-          Everything you need, all in <span className="relative inline-block">
+          Everything you need to become a developer, all in <span className="relative inline-block">
             one place.
             <svg className="absolute w-full h-[12px] -bottom-1 left-0 z-[-1]" viewBox="0 0 200 20" preserveAspectRatio="none" fill="none">
               <path ref={pathRef} d="M 5 15 Q 100 0 195 15" stroke="#5ef3b6" strokeWidth="10" strokeLinecap="round" />
@@ -97,7 +97,7 @@ export function Features() {
         </h2>
         
         <p className="feature-fade-up text-[#4a4a4a] text-sm md:text-base leading-relaxed mb-8 max-w-xl">
-          Experience the transformative power of Filearn as you gain financial confidence, build wealth and secure a better future.
+          Jump right in and start writing code. Koda is designed to get you building real-world applications and landing your first tech job without the fluff.
         </p>
         
         <div className="feature-fade-up">

@@ -15,7 +15,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Koda",
   description:
-    "Coding courses designed to empower individuals with the knowledge and skills needed to make informed decisions.",
+    "Join Koda to master modern web development, software engineering, and design. Hands-on coding courses built by industry experts to launch your tech career.",
   icons: {
     icon: "/singlelogo.svg",
   },

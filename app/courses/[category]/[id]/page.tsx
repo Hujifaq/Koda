@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { Navbar } from "../../../components/Navbar";
 import { Footer } from "../../../components/Footer";
 import { FiClock, FiBookOpen, FiBarChart2, FiPlus, FiX } from "react-icons/fi";
@@ -47,12 +48,33 @@ const avatars = [
 
 export default function IndividualCoursePage() {
   const params = useParams();
+  const router = useRouter();
+  const { status } = useSession();
   const { category, id } = params;
 
   const [course, setCourse] = useState<Course | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"about" | "learn" | "syllabus">("about");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
+
+  useEffect(() => {
+    if (course) {
+      const savedProgress = localStorage.getItem(`koda_progress_${id}`);
+      if (savedProgress) {
+        setIsEnrolled(true);
+        try {
+          const completed = JSON.parse(savedProgress);
+          if (completed.length === course.coursesDtl.length && course.coursesDtl.length > 0) {
+            setIsFinished(true);
+          }
+        } catch (e) {
+          console.error("Failed to parse progress", e);
+        }
+      }
+    }
+  }, [id, course]);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -125,8 +147,18 @@ export default function IndividualCoursePage() {
             </p>
 
             <div className="flex items-center flex-wrap gap-5 mb-8">
-              <button className="bg-[#0f0f11] text-white text-[13px] font-semibold px-6 py-3 rounded-xl hover:bg-black/90 hover:-translate-y-[4px] hover:transition-all cursor-pointer">
-                Enroll now
+              <button 
+                onClick={() => {
+                  if (status === "unauthenticated") {
+                    router.push("/login");
+                  } else if (status === "authenticated") {
+                    router.push(`/learn/${category}/${id}`);
+                  }
+                }}
+                disabled={status === "loading"}
+                className="bg-[#0f0f11] text-white text-[13px] font-semibold px-6 py-3 rounded-xl hover:bg-black/90 hover:-translate-y-[4px] hover:transition-all cursor-pointer disabled:opacity-70 disabled:hover:translate-y-0"
+              >
+                {status === "loading" ? "Loading..." : isFinished ? "Finished" : isEnrolled ? "Enrolled" : "Enroll now"}
               </button>
               <div className="flex items-baseline gap-1.5">
                 <span className="text-[1.5rem] font-semibold tracking-tight">

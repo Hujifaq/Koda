@@ -13,44 +13,44 @@ import "swiper/css/navigation";
 
 const SLIDES = [
   {
-    title: "Single Point of Contact",
+    title: "Real-World\nProjects",
     description:
-      "No matter how many markets you're exploring, you'll work with one dedicated project manager who orchestrates your entire multi-market research journey.",
+      "Forget boring theory. You'll build production-ready applications from day one, adding impressive, functional projects to your portfolio.",
   },
   {
-    title: "Local Experts,\nGlobal Consistency",
+    title: "Senior Engineer\nMentorship",
     description:
-      "Our teams combine deep cultural understanding with international research excellence, ensuring you receive insights that are both locally authentic and globally relevant.",
+      "Get instant feedback and code reviews from industry professionals who have shipped code at top tech companies.",
   },
   {
-    title: "Better Value,\nBetter Results",
+    title: "Modern Tech\nStack",
     description:
-      "Experience the same rigorous research standards across all markets, delivering comparable insights that inform cohesive international strategies.",
+      "Learn the tools that are actually in demand. Master React, Next.js, Node, and TypeScript to stay ahead of the curve.",
   },
   {
-    title: "Time Zone\nAligned Support",
+    title: "Thriving\nCommunity",
     description:
-      "With offices around the globe, our team members are always available and aligned with your working hours for responsive, seamless communication.",
+      "Join thousands of passionate developers. Share your progress, debug together, and build a network for your entire career.",
   },
   {
-    title: "Time Zone\nAligned Support",
+    title: "Lifetime\nAccess",
     description:
-      "With offices around the globe, our team members are always available and aligned with your working hours for responsive, seamless communication.",
+      "Pay once, learn forever. Get unlimited access to course updates so your skills never become obsolete as frameworks evolve.",
   },
   {
-    title: "Time Zone\nAligned Support",
+    title: "Career\nGuidance",
     description:
-      "With offices around the globe, our team members are always available and aligned with your working hours for responsive, seamless communication.",
+      "We don't just teach code; we help you get hired. Receive resume reviews, interview prep, and portfolio building strategies.",
   },
   {
-    title: "Time Zone\nAligned Support",
+    title: "Flexible\nLearning",
     description:
-      "With offices around the globe, our team members are always available and aligned with your working hours for responsive, seamless communication.",
+      "Learn at your own pace, on your own schedule. Download courses for offline access and fit coding into your busy life.",
   },
   {
-    title: "Time Zone\nAligned Support",
+    title: "Interactive\nChallenges",
     description:
-      "With offices around the globe, our team members are always available and aligned with your working hours for responsive, seamless communication.",
+      "Test your knowledge with bite-sized coding exercises and algorithm challenges designed to sharpen your problem-solving skills.",
   },
 ];
 

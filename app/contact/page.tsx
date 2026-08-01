@@ -1,139 +1,221 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { FiUser, FiMail, FiMessageSquare, FiArrowLeft, FiSend } from "react-icons/fi";
 import gsap from "gsap";
-import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
+import DecayCard from "../components/DecayCard";
 
 export default function ContactPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const text1Ref = useRef<HTMLHeadingElement>(null);
-  const text2Ref = useRef<HTMLHeadingElement>(null);
-  const formRef = useRef<HTMLDivElement>(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const rightPanelRef = useRef<HTMLDivElement>(null);
+
+  // ── Custom cursor effect ──────────────────────────────────────────────────
   useEffect(() => {
-    const tl = gsap.timeline();
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) return;
 
-    tl.fromTo(
-      [text1Ref.current, text2Ref.current],
-      { y: 150, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, stagger: 0.2, ease: "power4.out" }
-    ).fromTo(
-      formRef.current,
-      { y: 200, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "back.out(1.2)" },
-      "-=0.8"
-    );
+    const cursor = cursorRef.current;
+    const rightPanel = rightPanelRef.current;
+    if (!cursor || !rightPanel) return;
+
+    rightPanel.style.cursor = 'none';
+
+    gsap.set(cursor, { xPercent: -50, yPercent: -50 });
+
+    const xTo = gsap.quickTo(cursor, "x", { duration: 0.45, ease: "power3.out" });
+    const yTo = gsap.quickTo(cursor, "y", { duration: 0.45, ease: "power3.out" });
+
+    const onMove = (e: MouseEvent) => { xTo(e.clientX); yTo(e.clientY); };
+    window.addEventListener("mousemove", onMove);
+
+    const onRightEnter = (e: MouseEvent) => {
+      xTo(e.clientX);
+      yTo(e.clientY);
+      gsap.to(cursor, {
+        width: 64,
+        height: 64,
+        backgroundColor: "white",
+        opacity: 1,
+        scale: 1,
+        duration: 0.55,
+        ease: "elastic.out(1.2, 0.5)",
+      });
+      gsap.set(cursor, { innerHTML: `<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0'/><path d='M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0'/><path d='M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0'/><path d='M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15'/></svg>` });
+    };
+    const onRightLeave = () => {
+      gsap.to(cursor, {
+        width: 0,
+        height: 0,
+        opacity: 0,
+        scale: 0.2,
+        duration: 0.35,
+        ease: "back.in(2)",
+      });
+      gsap.set(cursor, { innerHTML: "" });
+    };
+
+    rightPanel.addEventListener("mouseenter", onRightEnter as EventListener);
+    rightPanel.addEventListener("mouseleave", onRightLeave);
+
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      rightPanel.removeEventListener("mouseenter", onRightEnter as EventListener);
+      rightPanel.removeEventListener("mouseleave", onRightLeave);
+    };
   }, []);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(false);
+
+    // Simulate sending an email/message
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess(true);
+      setName("");
+      setEmail("");
+      setMessage("");
+    }, 1500);
+  };
+
   return (
-    <div 
-      className="bg-[#fcfbf7] text-black min-h-screen flex flex-col relative" 
-      ref={containerRef}
-    >
-      
-      
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-      
-        <div className="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] rounded-full border-[1px] border-zinc-300/40"></div>
-        <div className="absolute top-[10%] right-[-10%] w-[60vw] h-[60vw] rounded-full border-[1px] border-zinc-300/40"></div>
-        
-      
-        <div className="absolute bottom-[0%] left-[20%] w-[40vw] h-[40vw] bg-pink-400/20 rounded-full blur-[100px]"></div>
-        <div className="absolute bottom-[0%] right-[10%] w-[30vw] h-[30vw] bg-teal-400/20 rounded-full blur-[100px]"></div>
-        <div className="absolute bottom-[-10%] right-[30%] w-[40vw] h-[40vw] bg-orange-400/20 rounded-full blur-[100px]"></div>
-      </div>
+    <>
+      {/* Custom cursor blob */}
+      <div
+        ref={cursorRef}
+        className="fixed top-0 left-0 pointer-events-none z-[9999] flex items-center justify-center rounded-full"
+        style={{
+          width: 0,
+          height: 0,
+          opacity: 0,
+          backgroundColor: "white",
+          willChange: "transform, width, height, opacity",
+        }}
+      />
 
-      <Navbar />
-      
-      <main className="flex-grow flex flex-col relative w-full pt-[20vh] pb-0 px-4 sm:px-8 md:px-16 mx-auto overflow-hidden">
-        
-       
-        <div className="absolute top-[15vh] left-0 w-full flex flex-col pointer-events-none z-0 px-4 sm:px-8 md:px-16">
-          <h1 
-            ref={text1Ref} 
-            className="text-[20vw] leading-[0.85] tracking-[-0.05em] font-medium text-zinc-900 opacity-0"
-          >
-            LETS
-          </h1>
-          <h1 
-            ref={text2Ref} 
-            className="text-[20vw] leading-[0.85] tracking-[-0.05em] font-medium text-zinc-900 text-right opacity-0 flex items-center justify-end"
-          >
-            <span className="font-light mr-[2vw]">+</span> TALK
-          </h1>
-        </div>
+      <main className="min-h-screen w-full flex flex-col lg:flex-row bg-[#f5f3ef]">
+      <Link
+        href="/"
+        className="absolute top-6 right-6 lg:left-6 lg:right-auto z-50 flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 border border-neutral-200/50 backdrop-blur-sm text-neutral-700 text-xs font-semibold shadow-sm transition-all hover:-translate-y-[1px] cursor-pointer"
+      >
+        <FiArrowLeft className="text-sm" />
+        Back to Home
+      </Link>
 
-        
-        <div 
-          ref={formRef} 
-          className="relative z-10 w-full max-w-6xl mx-auto mt-auto pt-[40vh] md:pt-[35vh] opacity-0"
-        >
-          <div className="bg-[#f3f2eb]/90 backdrop-blur-sm rounded-t-[2rem] p-8 md:p-16 border-t border-x border-white/50  relative">
-            <form className="w-full flex flex-col gap-10" onSubmit={(e) => e.preventDefault()}>
-              
-              <div className="flex flex-col md:flex-row gap-10 w-full">
-              
-                <div className="w-full md:w-1/2 flex flex-col gap-3">
-                  <label className="text-[12px] md:text-[14px] font-semibold text-zinc-800 tracking-wide uppercase">
-                    What's your name?
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="FULL NAME"
-                    className="w-full px-5 py-4 bg-[#e5e4dc]/60 border border-black/5 rounded-xl text-[14px] md:text-[15px] placeholder:text-zinc-400 focus:outline-none focus:border-zinc-400 focus:bg-[#e9e8e2] transition-colors"
-                    required
-                  />
-                </div>
-
-                {/* Email Input */}
-                <div className="w-full md:w-1/2 flex flex-col gap-3">
-                  <label className="text-[12px] md:text-[14px] font-semibold text-zinc-800 tracking-wide uppercase">
-                    What's your email?
-                  </label>
-                  <input
-                    type="email"
-                    placeholder="YOUR@EMAIL.COM"
-                    className="w-full px-5 py-4 bg-[#e5e4dc]/60 border border-black/5 rounded-xl text-[14px] md:text-[15px] placeholder:text-zinc-400 focus:outline-none focus:border-zinc-400 focus:bg-[#e9e8e2] transition-colors"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Message Textarea */}
-              <div className="w-full flex flex-col gap-3">
-                <label className="text-[12px] md:text-[14px] font-semibold text-zinc-800 tracking-wide uppercase">
-                  What's your brief?
-                </label>
-                <textarea
-                  placeholder="WRITE YOUR BRIEF HERE IN NO MORE THAN FIVE HUNDRED WORDS..."
-                  rows={4}
-                  className="w-full px-5 py-4 bg-[#e5e4dc]/60 border border-black/5 rounded-xl text-[14px] md:text-[15px] placeholder:text-zinc-400 focus:outline-none focus:border-zinc-400 focus:bg-[#e9e8e2] transition-colors resize-none"
-                  required
-                ></textarea>
-              </div>
-
-              {/* Submit Button */}
-              <div className="w-full flex justify-end mt-4">
-                <button
-                  type="submit"
-                  className="bg-black text-white px-10 py-4 rounded-full font-medium text-[15px] hover:bg-zinc-800 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 shadow-lg cursor-pointer"
-                >
-                  Submit Brief
-                </button>
-              </div>
-              
-            </form>
+      {/* Left Side: Contact Form */}
+      <div className="w-full lg:w-[50%] min-h-screen flex flex-col justify-center items-center px-6 sm:px-12 md:px-20 lg:px-16 xl:px-24 py-16">
+        <div className="w-full max-w-[440px]">
+          {/* Header */}
+          <div className="mb-10 text-left">
+            <h1 className="text-[2.5rem] leading-[1.1] font-semibold tracking-tight text-neutral-900 mb-3">
+              Let's talk.
+            </h1>
+            <p className="text-neutral-500 text-sm font-medium">
+              Have a question about a course or need help getting your dev environment set up? Drop us a line.
+            </p>
           </div>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            {success && (
+              <div className="bg-green-50 text-green-600 p-3 rounded-xl text-sm border border-green-100 flex items-center gap-2">
+                <FiSend className="text-base" />
+                Your message has been sent successfully!
+              </div>
+            )}
+            
+            {/* Name Input */}
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
+                <FiUser className="text-lg" />
+              </span>
+              <input
+                type="text"
+                placeholder="Enter your name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="w-full pl-12 pr-4 py-4 bg-white text-neutral-900 placeholder-neutral-400 border border-transparent rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#7c5cff]/50 shadow-sm hover:shadow transition-all text-[14px]"
+              />
+            </div>
+
+            {/* Email Input */}
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
+                <FiMail className="text-lg" />
+              </span>
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full pl-12 pr-4 py-4 bg-white text-neutral-900 placeholder-neutral-400 border border-transparent rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#7c5cff]/50 shadow-sm hover:shadow transition-all text-[14px]"
+              />
+            </div>
+
+            {/* Message Input */}
+            <div className="relative">
+              <span className="absolute left-4 top-6 -translate-y-1/2 text-neutral-400">
+                <FiMessageSquare className="text-lg" />
+              </span>
+              <textarea
+                placeholder="Write your message here..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                required
+                rows={5}
+                className="w-full pl-12 pr-4 py-4 bg-white text-neutral-900 placeholder-neutral-400 border border-transparent rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#7c5cff]/50 shadow-sm hover:shadow transition-all text-[14px] resize-none"
+              />
+            </div>
+
+            {/* Form Footer (Button) */}
+            <div className="mt-2 flex items-center justify-start gap-4">
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-black text-white text-[14px] font-bold px-8 py-4 rounded-2xl transition-all duration-200 hover:translate-y-[-4px] hover:bg-black/90 hover:shadow-black/20 active:translate-y-0 shadow-sm disabled:opacity-70 disabled:hover:translate-y-0 flex items-center justify-center gap-2 cursor-pointer w-full"
+              >
+                {loading ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <FiSend className="text-base" />
+                    Send Message
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
         </div>
-      </main>
-      
-      {/* We can hide footer on contact page or leave it. The reference has a clean bottom. 
-          We will wrap Footer so it goes below the form container naturally. */}
-      <div className="relative z-10 w-full bg-[#f3f2eb]">
-        <Footer />
       </div>
-      
-    </div>
+
+      {/* Right Side: DecayCard */}
+      <div 
+        ref={rightPanelRef}
+        className="hidden lg:block lg:w-[50%] bg-[#0a0a0a] min-h-screen relative overflow-hidden"
+      >
+        <section className="w-full h-full relative flex place-items-center justify-center bg-[#0a0a0a]">
+          <DecayCard width={450} height={600} image="https://picsum.photos/450/600?grayscale">
+            <h2>Contact<br />Us</h2>
+          </DecayCard>
+        </section>
+      </div>
+    </main>
+    </>
   );
 }

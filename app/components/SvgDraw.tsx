@@ -147,29 +147,29 @@ function SvgDraw() {
     return (
         <main ref={containerRef} className='relative bg-[#f5f4ee] z-20 svgdraw-container'>
             <div className='bg-[#f5f4ee] w-full min-h-screen rounded-t-3xl'>
-                <section className="relative w-full h-[100svh] p-8 bg-[var(--base-200)] flex justify-center items-center overflow-hidden">
-                    <h1 className="w-[60%] max-[1000px]:w-full text-center font-medium leading-[1.1] text-[4rem] max-[1000px]:text-[2rem] tracking-[-0.1rem] max-[1000px]:tracking-normal">Design to keep information clear and connected</h1>
+                <section className="relative w-full h-[100svh] p-8  bg-[#f5f4ee] flex justify-center items-center overflow-hidden">
+                    <h1 className="w-[60%] max-[1000px]:w-full text-center font-medium leading-[1.1] text-[4rem] max-[1000px]:text-[2rem] tracking-[-0.1rem] max-[1000px]:tracking-normal">Curriculums designed to make complex coding concepts click</h1>
                 </section>
 
                 <section className="relative z-0 w-full p-8 flex flex-col gap-40 max-[1000px]:gap-20 spotlight">
                     <div className="relative z-10 flex flex-col items-center gap-12">
                         <div className="w-[80%] max-[1000px]:w-full flex justify-center">
-                            <Image src="/1.svg" alt="image1" width={1000} height={800} className="w-full h-auto object-contain bg-transparent max-[1000px]:scale-[2] max-[1000px]:mt-14" />
+                            <Image src="/1.svg" alt="image1" width={1000} height={800} loading="lazy" quality={85} className="w-full h-auto object-contain bg-transparent max-[1000px]:scale-[2] max-[1000px]:mt-14" />
                         </div>
                     </div>
 
                     <div className="relative z-10 flex justify-center gap-8 max-[1000px]:flex-col">
                         <div className="flex-1 flex flex-col justify-center">
                             <div className="w-[75%] max-[1000px]:w-full mx-auto p-8 bg-[var(--base-200)] rounded-2xl flex flex-col gap-4">
-                                <h2 className="font-medium leading-[1.1] text-[2.5rem] max-[1000px]:text-[1.5rem] tracking-[-0.075rem] max-[1000px]:tracking-normal">Built for increasing information demands</h2>
+                                <h2 className="font-medium leading-[1.1] text-[2.5rem] max-[1000px]:text-[1.5rem] tracking-[-0.075rem] max-[1000px]:tracking-normal">Learn by building real-world projects</h2>
                                 <p className="text-[1.125rem] max-[1000px]:text-[1rem] font-medium">
-                                    Whether it is files, notes, or incoming messages, the app sorts and prioritizes items automatically. It prevents clutter and helps maintain clarity during busy periods.
+                                    Forget boring lectures. At Koda, you'll learn by building actual applications—from dynamic frontends to robust APIs—so you're ready for the job market.
                                 </p>
                             </div>
                         </div>
                         <div className="flex-1 flex flex-col justify-center">
                             <div>
-                                <Image src="/2.svg" alt="image2" width={500} height={400} className="w-full h-full object-cover bg-transparent min-[1000px]:scale-[1.8] sm:rotate-10 scale-[2] sm:mt-0 mt-10" />
+                                <Image src="/2.svg" alt="image2" width={500} height={400} loading="lazy" quality={85} className="w-full h-full object-cover bg-transparent min-[1000px]:scale-[1.8] sm:rotate-10 scale-[2] sm:mt-0 mt-10" />
                             </div>
                         </div>
                     </div>
@@ -177,20 +177,20 @@ function SvgDraw() {
                     <div className="relative z-10 flex justify-center gap-8 max-[1000px]:flex-col">
                         <div className="flex-1 flex flex-col justify-center">
                             <div>
-                                <Image src="/3.svg" alt="image3" width={500} height={400} className="w-full h-full object-cover bg-transparent min-[1000px]:scale-[1.8] sm:-rotate-5 scale-[2] sm:mt-0 mt-10 " />
+                                <Image src="/3.svg" alt="image3" width={500} height={400} loading="lazy" quality={85} className="w-full h-full object-cover bg-transparent min-[1000px]:scale-[1.8] sm:-rotate-5 scale-[2] sm:mt-0 mt-10 " />
                             </div>
                         </div>
                         <div className="flex-1 flex flex-col justify-center">
                             <div className="w-[75%] max-[1000px]:w-full mx-auto p-8 bg-[var(--base-200)] rounded-2xl flex flex-col gap-4">
-                                <h2 className="font-medium leading-[1.1] text-[2.5rem] max-[1000px]:text-[1.5rem] tracking-[-0.075rem] max-[1000px]:tracking-normal">Built for increasing information demands</h2>
+                                <h2 className="font-medium leading-[1.1] text-[2.5rem] max-[1000px]:text-[1.5rem] tracking-[-0.075rem] max-[1000px]:tracking-normal">Master the tools that matter</h2>
                                 <p className="text-[1.125rem] max-[1000px]:text-[1rem] font-medium">
-                                    Whether it is files, notes, or incoming messages, the app sorts and prioritizes items automatically. It prevents clutter and helps maintain clarity during busy periods.
+                                    Stop wasting time on outdated tech. We constantly update our curriculum to focus on modern frameworks like Next.js, React, and TypeScript so your skills remain highly relevant.
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div className="relative z-10 mb-[5rem] sm:mb-0 flex justify-center gap-8 max-[1000px]:flex-col">
-                        <div className="w-[100%] max-[1000px]:scale-[2]"><Image src='/4.svg' alt='image4' width={1000} height={800} className="w-full h-full object-cover bg-transparent" /></div>
+                        <div className="w-[100%] max-[1000px]:scale-[2]"><Image src='/4.svg' alt='image4' width={1000} height={800} loading="lazy" quality={85} className="w-full h-full object-cover bg-transparent" /></div>
 
                     </div>
 
@@ -217,7 +217,7 @@ function SvgDraw() {
                                 startOffset="50%"
                                 textAnchor="middle"
                             >
-                                Clearer organization ready for whatever comes next.
+                                Write cleaner code. Build faster apps. Shape the future.
                             </textPath>
                         </text>
                     </svg>

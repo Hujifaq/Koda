@@ -41,7 +41,7 @@ export function FAQ() {
         </h2>
         <p className="text-[#4a4a4a] text-sm md:text-base leading-relaxed max-w-lg mx-auto">
           If you can't find the answer to your question below, please get in{" "}
-          <a href="#" className="underline decoration-1 underline-offset-4 hover:text-[#7c5cff] transition-colors">
+          <a href="/contact" className="underline decoration-1 underline-offset-4 hover:text-[#7c5cff] transition-colors">
             contact
           </a>{" "}
           with us today.

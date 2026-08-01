@@ -88,7 +88,7 @@ export function CTABanner() {
         <div className="relative z-10 max-w-xs">
           <div ref={headlineRef}>
             <h2 className="text-white text-3xl md:text-4xl font-semibold leading-tight tracking-tight mb-6">
-              Empower your<br />financial future, today.
+              Start building your<br />tech career today.
             </h2>
           </div>
           <div ref={buttonRef}>

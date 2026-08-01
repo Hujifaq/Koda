@@ -140,7 +140,7 @@ function Hero() {
 
         {/* Subtitle */}
         <p className="mt-7 max-w-lg text-[15px] leading-relaxed text-zinc-900">
-          The most powerful tool you have is your own potential. We provide the industry-grade coding courses and hands-on projects to help you build the software of tomorrow, step by step.
+          Start writing code today. We've built practical, hands-on courses that actually teach you how to build real apps, not just copy-paste tutorials.
         </p>
 
         {/* CTA */}

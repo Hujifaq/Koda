@@ -33,7 +33,7 @@ export default function TextGradientScroll({ text }: { text: string }) {
   return (
     <div className="w-full flex justify-center py-24 md:py-48 px-6 md:px-12 bg-[#6ee7b7]">
       <div ref={container} className="max-w-[1400px] w-full mx-auto">
-        <p className="text-[2rem] md:text-[3rem] lg:text-[3.5rem] font-medium leading-[1.2] text-[#163d1a] m-0 selection:bg-white selection:text-[#6ee7b7]">
+        <p className="text-[1.3rem] md:text-[2.5rem] lg:text-[3.5rem] font-medium leading-[1.2] text-[#163d1a] m-0 selection:bg-white selection:text-[#6ee7b7]">
           {words.map((word, i) => (
             <span
               key={i}
