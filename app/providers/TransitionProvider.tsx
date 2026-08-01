@@ -5,7 +5,7 @@ import { TransitionRouter } from "next-transition-router";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
-// Returns true on touch/mobile devices (client-side only)
+
 const isMobileDevice = () =>
   typeof window !== "undefined" &&
   ("ontouchstart" in window || window.matchMedia("(hover: none)").matches);
@@ -30,7 +30,7 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
   return (
     <TransitionRouter auto
       leave={(next) => {
-        // On mobile, skip the SVG animation entirely to avoid the draw→reset flash
+        
         if (isMobileDevice()) {
           next();
           return () => { };
@@ -50,11 +50,11 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
         return () => tl.kill();
       }}
       enter={(next) => {
-        // Force layout recalculations for GSAP and Lenis now that the new page is mounted
+       
         ScrollTrigger.refresh();
         window.dispatchEvent(new Event('resize'));
         
-        // On mobile, skip the SVG animation entirely
+       
         if (isMobileDevice()) {
           next();
           return () => { };
@@ -62,7 +62,7 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
 
         const tl = gsap.timeline({ 
           onComplete: () => {
-            // Also refresh at the very end just in case any lingering layout shifts occur
+           
             ScrollTrigger.refresh();
             window.dispatchEvent(new Event('resize'));
             next();

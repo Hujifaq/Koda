@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
         
         await connectMongoDB();
         
-        // We'll allow logging in with either username (name) or email
+        
         const user = await User.findOne({
           $or: [
             { email: credentials.username },
@@ -55,18 +55,18 @@ export const authOptions: NextAuthOptions = {
           await User.create({
             name: user.name,
             email: user.email,
-            // Password is not required for OAuth
+           
           });
         }
         return true;
       }
-      return true; // For credentials provider
+      return true; 
     },
     async jwt({ token, user, trigger, session }) {
       if (user) {
         token.sub = user.id || (user as any)._id?.toString();
       }
-      // Ensure we always have latest role and id
+     
       await connectMongoDB();
       const dbUser = await User.findOne({ email: token.email });
       if (dbUser) {

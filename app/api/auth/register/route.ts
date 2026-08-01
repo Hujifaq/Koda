@@ -16,7 +16,7 @@ export async function POST(req: Request) {
 
     await connectMongoDB();
 
-    // Check if user already exists
+  
     const userExists = await User.findOne({ email });
     if (userExists) {
       return NextResponse.json(
@@ -33,10 +33,10 @@ export async function POST(req: Request) {
       );
     }
 
-    // Hash password
+  
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
+ 
     await User.create({
       name: username,
       email,

@@ -28,7 +28,7 @@ export async function PUT(req: Request) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    // Update fields
+    
     user.name = name;
 
     if (password && password.trim().length > 0) {

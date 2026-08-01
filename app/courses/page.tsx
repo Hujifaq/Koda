@@ -82,7 +82,7 @@ const CourseCard = ({ course }: { course: Course }) => {
   return (
     <div className="bg-white rounded-[2rem] p-4 pb-6 flex flex-col shadow-sm border border-gray-100/50 transition-shadow duration-300 group">
       
-      {/* Image Block from API */}
+     
       <div className="relative w-full aspect-[4/3] rounded-[1.5rem] overflow-hidden mb-6 bg-gray-100">
         <Image
           src={course.image}
@@ -98,14 +98,13 @@ const CourseCard = ({ course }: { course: Course }) => {
         </div>
       </div>
 
-      {/* Content */}
+    
       <div className="px-2 flex flex-col flex-1">
-        {/* Removed group-hover:text-[#7c5cff] */}
+       
         <h3 className="text-[1.35rem] leading-[1.2] font-semibold mb-3 tracking-tight transition-colors">
           {course.name}
         </h3>
-        
-        {/* Meta Info */}
+          
         <div className="flex items-center gap-4 text-[11px] text-zinc-500 font-medium mb-4">
           <div className="flex items-center gap-1.5"><FiClock className="text-zinc-400" /> {course.length || `${course.coursesDtl.length * 10} hours`}</div>
           <div className="flex items-center gap-1.5"><FiBookOpen className="text-zinc-400" /> {course.coursesDtl.length} sections</div>
@@ -116,13 +115,13 @@ const CourseCard = ({ course }: { course: Course }) => {
           {course.description}
         </p>
 
-        {/* Price */}
+      
         <div className="flex items-baseline gap-1.5 mb-6">
           <span className="text-[1.35rem] font-semibold tracking-tight">{course.price ? course.price.toLocaleString() : "1,200"} </span>
           <span className="text-[9px] text-zinc-400 uppercase tracking-widest font-semibold">excl. taxes</span>
         </div>
 
-        {/* Footer row */}
+       
         <div className="flex items-center justify-between mt-auto">
           <MagneticLink 
             href={`/courses/${course.category.toLowerCase().replace(/\s+/g, '-')}/${course.id}`} 

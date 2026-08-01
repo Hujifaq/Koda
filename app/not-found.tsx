@@ -16,7 +16,7 @@ export default function NotFoundPage() {
   const buttonRef = useRef<HTMLAnchorElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
 
-  // Entrance animation
+  
   useGSAP(() => {
     const tl = gsap.timeline();
     
@@ -48,7 +48,7 @@ export default function NotFoundPage() {
     );
   }, []);
 
-  // Magnetic Repel Effect for the 404 numbers
+  
   useEffect(() => {
     const numbers = [num4_1Ref.current, num0Ref.current, num4_2Ref.current];
     
@@ -67,14 +67,14 @@ export default function NotFoundPage() {
         const distY = mouseY - numY;
         const distance = Math.sqrt(distX * distX + distY * distY);
         
-        // Repel threshold
+       
         const maxDist = 200;
         
         if (distance < maxDist) {
-          // Calculate push strength (closer = stronger push)
+        
           const strength = (maxDist - distance) / maxDist;
           
-          // Push away from mouse
+        
           const moveX = -(distX / distance) * (strength * 40);
           const moveY = -(distY / distance) * (strength * 40);
           const rotate = (distX / distance) * (strength * 15);
@@ -87,7 +87,7 @@ export default function NotFoundPage() {
             ease: "power2.out"
           });
         } else {
-          // Spring back to origin
+       
           gsap.to(num, {
             x: 0,
             y: 0,
@@ -103,7 +103,7 @@ export default function NotFoundPage() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Magnetic button hover effect
+ 
   useEffect(() => {
     const btn = buttonRef.current;
     if (!btn) return;
@@ -114,7 +114,7 @@ export default function NotFoundPage() {
       const y = e.clientY - rect.top - rect.height / 2;
       
       gsap.to(btn, {
-        x: x * 0.3, // Move slightly towards mouse
+        x: x * 0.3, 
         y: y * 0.3,
         duration: 0.4,
         ease: "power2.out"
@@ -143,7 +143,7 @@ export default function NotFoundPage() {
     <div className="bg-[#f5f4ee] min-h-screen flex flex-col relative text-black overflow-hidden" ref={containerRef}>
       <JellyCursor />
       
-      {/* Background ambient shapes */}
+      
       <div className="absolute inset-0 overflow-hidden pointer-events-none flex items-center justify-center opacity-30">
         <div className="absolute w-[60vw] h-[60vw] rounded-full bg-gradient-to-tr from-[#6ee7b7]/40 to-[#6c6bc2]/20 blur-[100px] transform -translate-x-1/4 -translate-y-1/4" />
         <div className="absolute w-[50vw] h-[50vw] rounded-full bg-gradient-to-br from-[#ec4e39]/20 to-[#6ee7b7]/30 blur-[80px] transform translate-x-1/3 translate-y-1/3" />
@@ -153,7 +153,6 @@ export default function NotFoundPage() {
       
       <main className="flex-1 flex flex-col items-center justify-center relative z-10 px-6 py-20">
         
-        {/* Playful 404 Numbers */}
         <div className="flex items-center justify-center gap-2 md:gap-8 font-bold text-[10rem] md:text-[22rem] leading-none tracking-tighter text-[#1a1a1a]">
           <div ref={num4_1Ref} className="cursor-none select-none transform will-change-transform drop-shadow-2xl text-[#6c6bc2]">4</div>
           <div ref={num0Ref} className="cursor-none select-none transform will-change-transform drop-shadow-2xl text-[#f7c53f]">0</div>

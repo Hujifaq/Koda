@@ -58,9 +58,9 @@ export default function SliderSection() {
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
 
-  // Magnetic button hover effect (desktop only)
+ 
   useGSAP(() => {
-    // Skip magnetic effect on touch/mobile devices
+   
     const isTouchDevice =
       typeof window !== "undefined" &&
       (window.matchMedia("(hover: none)").matches || "ontouchstart" in window);
@@ -73,7 +73,7 @@ export default function SliderSection() {
       if (!btn) return;
 
       const handleMouseMove = (e: MouseEvent) => {
-        // Don't animate if disabled
+       
         if (btn.disabled) return;
 
         const rect = btn.getBoundingClientRect();
@@ -81,9 +81,9 @@ export default function SliderSection() {
         const y = e.clientY - rect.top - rect.height / 2;
 
         gsap.to(btn, {
-          x: x * 0.4, // Pull towards mouse
+          x: x * 0.4, 
           y: y * 0.4,
-          scale: 1.15, // Scale up
+          scale: 1.15, 
           duration: 0.4,
           ease: "power2.out",
         });
@@ -97,7 +97,7 @@ export default function SliderSection() {
           y: 0,
           scale: 1,
           duration: 0.8,
-          ease: "elastic.out(1, 0.3)", // Very bouncy and jelly
+          ease: "elastic.out(1, 0.3)", 
         });
       };
 
@@ -115,13 +115,13 @@ export default function SliderSection() {
     <div className="w-full py-24 md:py-32 px-6 md:px-12 overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         
-        {/* Header Area */}
+       
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
           <h2 className="text-[2rem] md:text-[2.5rem] font-semibold text-[#1a1a1a] tracking-tight">
             What Sets Us Apart
           </h2>
           
-          {/* Custom Navigation Buttons */}
+       
           <div className="flex gap-4">
             <button
               ref={prevRef}
@@ -138,7 +138,7 @@ export default function SliderSection() {
           </div>
         </div>
 
-        {/* Swiper Slider */}
+       
         <Swiper
           modules={[Navigation]}
           navigation={{
@@ -146,7 +146,7 @@ export default function SliderSection() {
             nextEl: nextRef.current,
           }}
           onInit={(swiper) => {
-            // Re-assign navigation elements after init to bind them properly
+           
             // @ts-ignore
             swiper.params.navigation.prevEl = prevRef.current;
             // @ts-ignore

@@ -16,7 +16,7 @@ export default function ContactPage() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const rightPanelRef = useRef<HTMLDivElement>(null);
 
-  // ── Custom cursor effect ──────────────────────────────────────────────────
+  
   useEffect(() => {
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouchDevice) return;
@@ -76,7 +76,7 @@ export default function ContactPage() {
     setLoading(true);
     setSuccess(false);
 
-    // Simulate sending an email/message
+    
     setTimeout(() => {
       setLoading(false);
       setSuccess(true);
@@ -132,7 +132,7 @@ export default function ContactPage() {
               </div>
             )}
             
-            {/* Name Input */}
+          
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
                 <FiUser className="text-lg" />
@@ -147,7 +147,7 @@ export default function ContactPage() {
               />
             </div>
 
-            {/* Email Input */}
+           
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
                 <FiMail className="text-lg" />
@@ -162,7 +162,7 @@ export default function ContactPage() {
               />
             </div>
 
-            {/* Message Input */}
+            
             <div className="relative">
               <span className="absolute left-4 top-6 -translate-y-1/2 text-neutral-400">
                 <FiMessageSquare className="text-lg" />

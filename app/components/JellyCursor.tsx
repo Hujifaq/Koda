@@ -17,7 +17,6 @@ export function JellyCursor() {
     let isHoveringClickable = false;
     let animationFrameId: number;
 
-    // Use gsap.quickSetter for optimized property setting
     const setX = gsap.quickSetter(elasticCursor, "x", "px");
     const setY = gsap.quickSetter(elasticCursor, "y", "px");
     const setRotation = gsap.quickSetter(elasticCursor, "rotate", "deg");
@@ -37,19 +36,18 @@ export function JellyCursor() {
       const rotation = getAngle(vel.x, vel.y);
       const scale = getScale(vel.x, vel.y);
 
-      // Apply jelly-like effect (position and rotation)
-      // Note: translate(-50%, -50%) is handled in initial CSS, so we just set x and y
+    
       setX(pos.x);
       setY(pos.y);
       setRotation(rotation);
 
-      // If not hovering, apply the jelly scale effect
+    
       if (!isHoveringClickable) {
         setScaleX(1 + scale);
         setScaleY(1 - scale);
       }
 
-      // Expose position to CSS for masking effects
+     
       document.body.style.setProperty('--jelly-x', `${pos.x}px`);
       document.body.style.setProperty('--jelly-y', `${pos.y}px`);
     }
@@ -57,7 +55,7 @@ export function JellyCursor() {
     function animate() {
       const speed = 0.35;
 
-      // Update cursor's position based on targetPos
+      
       pos.x += (targetPos.x - pos.x) * speed;
       pos.y += (targetPos.y - pos.y) * speed;
       vel.x = targetPos.x - pos.x;
@@ -87,7 +85,7 @@ export function JellyCursor() {
     const onMouseEnterElement = () => handleCursorHover(true);
     const onMouseLeaveElement = () => handleCursorHover(false);
 
-    // Initial attachment for existing elements
+   
     const attachHoverEvents = () => {
       document.querySelectorAll('a, button').forEach((element) => {
         element.addEventListener('mouseenter', onMouseEnterElement);
@@ -102,10 +100,10 @@ export function JellyCursor() {
     document.addEventListener('mouseleave', hideCursor);
     document.addEventListener('mouseenter', showCursor);
 
-    // Attach to existing elements
+   
     attachHoverEvents();
 
-    // We can also use a MutationObserver to attach to dynamically added links/buttons
+    
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {

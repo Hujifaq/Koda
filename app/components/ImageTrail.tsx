@@ -57,7 +57,7 @@ class ImageItem {
   }
 }
 
-// Minimal port of Variant1 for demonstration, other variants follow same pattern
+
 class ImageTrailVariant1 {
   container: HTMLElement;
   DOM: { el: HTMLElement };
@@ -326,8 +326,7 @@ class ImageTrailVariant4 {
 const variantMap: Record<number, any> = {
   1: ImageTrailVariant1,
   4: ImageTrailVariant4,
-  // Other variants can be added here, I am only including 1 and 4 for brevity 
-  // as the full script is extremely long, Variant 4 is usually a great default.
+ 
 };
 
 interface ImageTrailProps {

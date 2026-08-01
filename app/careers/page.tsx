@@ -28,7 +28,7 @@ export default function CareersPage() {
     
     const tl = gsap.timeline();
 
-    // 1. Text Reveal Animation (Slide up and fade in)
+    
     tl.fromTo(
       text1Ref.current,
       { y: 150, opacity: 0, rotateZ: 5 },
@@ -60,9 +60,9 @@ export default function CareersPage() {
         "-=0.6"
       );
 
-    // 2. Mission Section Scroll Animations
+  
     if (missionContainerRef.current) {
-      // Underline animation
+      
       gsap.fromTo(
         ".mission-path",
         { strokeDasharray: 500, strokeDashoffset: 500 },
@@ -78,7 +78,7 @@ export default function CareersPage() {
         }
       );
 
-      // Bouncy hoverable items reveal
+    
       gsap.fromTo(
         ".mission-item",
         { y: 80, opacity: 0, scale: 0.95 },
@@ -131,19 +131,19 @@ export default function CareersPage() {
               </div>
               
             </div>
-            {/* Fake Subtext */}
+            
             <div className="mt-6 md:mt-10 max-w-md mx-auto text-[15px] md:text-[18px] opacity-0 pointer-events-none">
               Koda is a community-driven platform where passionate individuals learn, write code, and build software that shapes the future.
             </div>
           </div>
         </div>
 
-        {/* Fake Navbar to maintain layout for the real hero text */}
+     
         <div className="opacity-0 pointer-events-none"><Navbar /></div>
 
         <div className="flex-1 flex flex-col items-center justify-center relative w-full px-6 z-10">
 
-          {/* Big Heading Text */}
+       
           <div 
             className="text-center font-medium tracking-tight text-[#1a1a1a] leading-[1.05] flex flex-col items-center relative" >
             <div className="overflow-hidden pb-2 md:pb-4 pointer-events-none">
@@ -158,7 +158,7 @@ export default function CareersPage() {
             </div>
           </div>
 
-          {/* Subtext */}
+       
           <div
             ref={subTextRef}
             className="mt-6 md:mt-10 text-center text-zinc-600 text-[15px] md:text-[18px] max-w-md mx-auto leading-relaxed z-10"
@@ -180,7 +180,7 @@ export default function CareersPage() {
           <h2 className="mission-item text-[2.5rem] md:text-[4rem] font-bold text-[#1a4a1f] mb-8 leading-tight">
             Our <span className="relative inline-block">
               Mission
-              {/* Hand-drawn underline SVG */}
+             
               <svg className="absolute w-full h-[16px] -bottom-2 left-0 z-[1]" viewBox="0 0 200 20" preserveAspectRatio="none" fill="none">
                 <path
                   className="mission-path"
@@ -219,9 +219,9 @@ export default function CareersPage() {
         </div>
         <ZoomParallaxSection />
         
-        {/* TEXT GRADIENT SCROLL SECTION */}
+       
         <TextGradientScroll text="Transform your ideas into reality. At Koda, we equip you with the modern development skills and practical experience needed to build the web of tomorrow. Whether you're landing your first junior role or scaling complex architectures, our platform provides the exact roadmap you need for a thriving tech career." /> 
-        {/* SWIPER SLIDER SECTION */}
+        
       <SliderSection />
       </div>
       <SvgDraw />

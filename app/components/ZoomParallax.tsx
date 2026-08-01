@@ -26,75 +26,75 @@ export default function ZoomParallax() {
 
   const scaleCenter = useTransform(scrollYProgress, [0, 0.75, 1], [1, 4, 4]);
 
-  // Adjacent images: slightly larger to exit viewport as center fills in
+  
   const scaleAdj = useTransform(scrollYProgress, [0, 0.75, 1], [1, 5, 5]);
 
-  // Outer images: faster zoom — they fly past the viewport edges early
+  
   const scaleOuter = useTransform(scrollYProgress, [0, 0.75, 1], [1, 6, 6]);
 
-  // Corner/small images: fastest zoom
+  
   const scaleCorner = useTransform(scrollYProgress, [0, 0.75, 1], [1, 8, 8]);
 
   
   const pictures = [
-    // ── 1: Large portrait square, LEFT side spanning rows 1–2 ──
+    
     {
       src: IMAGES[0],
-      scale: scaleAdj,     // scale 5 → exits left edge
+      scale: scaleAdj,    
       dx: "-27.6vw",
       dy: "-10.4vh",
       width: "22.9vw",
       height: "47.9vh",
     },
-    // ── 2: Wide landscape, TOP CENTER-RIGHT ──
+    
     {
       src: IMAGES[1],
-      scale: scaleAdj,     // scale 5 → exits top edge
+      scale: scaleAdj,     
       dx: "5.4vw",
       dy: "-32.3vh",
       width: "38.1vw",
       height: "35.4vh",
     },
-    // ── 3: MIDDLE CENTER — fills viewport exactly at scale 4, then pins ──
+  
     {
       src: IMAGES[2],
-      scale: scaleCenter,  // scale 4 = 100vh fill, PINNED after 75% scroll
+      scale: scaleCenter,  
       dx: "0vw",
       dy: "0vh",
       width: "27.3vw",
       height: "25.5vh",
     },
-    // ── 4: Medium landscape, MIDDLE RIGHT ──
+   
     {
       src: IMAGES[3],
-      scale: scaleAdj,     // scale 5 → exits right edge
+      scale: scaleAdj,  
       dx: "30.3vw",
       dy: "0vh",
       width: "30.3vw",
       height: "25vh",
     },
-    // ── 5: Wide landscape, BOTTOM LEFT ──
+   
     {
       src: IMAGES[4],
-      scale: scaleOuter,   // scale 6 → exits bottom-left
+      scale: scaleOuter,  
       dx: "-23.4vw",
       dy: "29.7vh",
       width: "31.3vw",
       height: "26vh",
     },
-    // ── 6: Portrait, BOTTOM CENTER ──
+  
     {
       src: IMAGES[5],
-      scale: scaleOuter,   // scale 6 → exits bottom
+      scale: scaleOuter,  
       dx: "3.4vw",
       dy: "29.7vh",
       width: "19.5vw",
       height: "26vh",
     },
-    // ── 7: Small landscape, BOTTOM RIGHT ──
+   
     {
       src: IMAGES[6],
-      scale: scaleCorner,  // scale 8 → fastest, exits bottom-right first
+      scale: scaleCorner, 
       dx: "24.9vw",
       dy: "29.7vh",
       width: "19.5vw",
@@ -120,14 +120,10 @@ export default function ZoomParallax() {
               scale,
               position: "absolute",
               inset: 0,
-              // Scale originates from the viewport center (motion.div center = viewport center)
+            
             }}
           >
-            {/*
-             * Anchor to viewport center via left/top: 50%,
-             * then offset from that center using translate.
-             * Image 3: translate(-50%, -50%) → exactly at center, always.
-             */}
+            
             <div
               style={{
                 position: "absolute",

@@ -5,7 +5,7 @@ import { connectMongoDB } from "@/lib/mongodb";
 import User from "@/models/user";
 import { Resend } from "resend";
 
-// Provide a fallback string during build time to avoid the "Missing API key" error.
+
 const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy_key");
 
 export async function POST(req: Request) {
@@ -21,18 +21,18 @@ export async function POST(req: Request) {
     const user = await User.findOne({ email });
 
     if (!user) {
-      // Return 200 even if user not found to prevent email enumeration
+      
       return NextResponse.json({ message: "If that email is in our database, we have sent a reset link." }, { status: 200 });
     }
 
-    // Generate token
+    
     const resetToken = crypto.randomBytes(32).toString("hex");
     const passwordResetToken = crypto
       .createHash("sha256")
       .update(resetToken)
       .digest("hex");
 
-    // Token expires in 1 hour
+   
     const passwordResetExpires = new Date(Date.now() + 3600000);
 
     user.resetPasswordToken = passwordResetToken;

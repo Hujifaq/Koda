@@ -200,7 +200,7 @@ export function Navbar() {
         y = `${rect.top + rect.height / 2}px`;
       }
 
-      // 1. Menu morph expand
+  
       tl.current.fromTo(menuRef.current, {
         backgroundColor: "#7c5cff",
         clipPath: `circle(0% at ${x} ${y})`,
@@ -211,7 +211,7 @@ export function Navbar() {
         ease: "power3.inOut",
       });
 
-      // 2. Letters bounce up
+  
       const letters = menuRef.current.querySelectorAll(".menu-letter");
       tl.current.fromTo(
         letters,
@@ -226,7 +226,7 @@ export function Navbar() {
         "-=0.6"
       );
 
-      // 3. Fade in contact info
+    
       const contactInfo = menuRef.current.querySelector(".menu-contact");
       if (contactInfo) {
         tl.current.fromTo(
@@ -237,7 +237,7 @@ export function Navbar() {
         );
       }
 
-      // 4. Fade in actions
+    
       const menuActions = menuRef.current.querySelector(".menu-actions");
       if (menuActions) {
         tl.current.fromTo(
@@ -261,30 +261,30 @@ export function Navbar() {
         if (menuRef.current) menuRef.current.style.pointerEvents = "none";
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+ 
   }, [isOpen]);
 
   useEffect(() => {
     if (!cartRef.current || !cartOverlayRef.current) return;
 
-    // Select the text elements we want to animate
+    
     const cartTexts = cartRef.current.querySelectorAll(".cart-text");
 
     if (isCartOpen) {
       document.body.style.overflow = "hidden";
       cartOverlayRef.current.style.pointerEvents = "auto";
 
-      // Animate overlay
+      
       gsap.to(cartOverlayRef.current, { opacity: 1, duration: 0.3 });
 
-      // Animate panel morph (clip-path)
+    
       gsap.to(cartRef.current, {
         clipPath: "circle(150% at 100% 0%)",
         duration: 0.8,
         ease: "power3.inOut"
       });
 
-      // Animate text slide up
+     
       gsap.fromTo(cartTexts,
         { y: 30, opacity: 0 },
         {
@@ -302,14 +302,14 @@ export function Navbar() {
 
       gsap.to(cartOverlayRef.current, { opacity: 0, duration: 0.3, delay: 0.2 });
 
-      // Fade text out quickly
+    
       gsap.to(cartTexts, {
         y: 10,
         opacity: 0,
         duration: 0.2,
       });
 
-      // Animate panel morph out
+     
       gsap.to(cartRef.current, {
         clipPath: "circle(0% at 100% 0%)",
         duration: 0.6,
@@ -325,7 +325,7 @@ export function Navbar() {
         ref={shellRef}
         className={`relative z-[60] mx-auto w-full overflow-hidden transition-colors duration-500 ${isOpen ? 'bg-transparent' : 'bg-white'}`}
       >
-        {/* Announcement bar */}
+      
         <div ref={announcementRef} className="relative z-0 w-full overflow-hidden bg-[#7c5cff]">
           <div ref={announcementContentRef} className="py-2.5 text-center text-sm text-white flex items-center justify-center">
             <span>
@@ -337,7 +337,7 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Main header */}
+     
         <header ref={headerRef} className={`relative mx-auto flex w-full items-center justify-between px-6 py-0 md:px-12 md:py-4 transition-colors duration-500 ${isOpen ? 'bg-transparent' : 'bg-white'}`}>
           <Link href="/" className="flex items-center" data-nav-logo>
             <KodaLogo />
@@ -357,9 +357,9 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* Desktop Actions */}
+       
           <div className="hidden md:flex items-center gap-2 flex-shrink-0">
-            {/* Cart */}
+          
             <button
               type="button"
               className="flex items-center gap-2 rounded-xl px-4 py-2 hover:bg-black/5 transition-all duration-200 cursor-pointer"
@@ -447,7 +447,7 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Mobile Menu Toggle Button */}
+       
           <button
             ref={toggleButtonRef}
             className={`md:hidden flex items-center justify-center rounded-full w-11 h-7.5 transition-all duration-500 cursor-pointer relative z-[60] ${isOpen ? "bg-transparent scale-110" : "bg-[#7c5cff] hover:scale-105"
@@ -477,7 +477,7 @@ export function Navbar() {
                 />
               </svg>
 
-              {/* Straight X Icon */}
+           
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -496,7 +496,7 @@ export function Navbar() {
         </header>
       </div>
 
-      {/* Full Screen Mobile Menu Overlay */}
+    
       <div
         ref={menuRef}
         className="fixed inset-0 z-50 bg-[#f3f2f0] flex flex-col pointer-events-none overflow-y-auto"
@@ -504,10 +504,10 @@ export function Navbar() {
       >
 
 
-        {/* Content Container */}
+      
         <div className="flex-1 flex flex-col mt-48 md:flex-row max-w-7xl w-full mx-auto px-6 md:px-12 pb-12 pt-6">
 
-          {/* Left Column - Contact Info (Bottom Left on Desktop) */}
+       
           <div className="menu-contact opacity-0 flex flex-col justify-end md:w-1/2 order-2 md:order-1 mt-16 md:mt-0 text-left">
             <h3 className="text-[11px] md:text-sm font-bold tracking-[0.3em] text-[#7c5cff] mb-4">
               GET IN TOUCH
@@ -526,7 +526,7 @@ export function Navbar() {
             </div>
           </div>
 
-          {/* Right Column - Giant Links (Center Right on Desktop) */}
+        
           <div className="flex flex-col justify-center md:w-1/2 order-1 md:order-2 gap-0 md:gap-2">
             {navLinks.map((link) => (
               <Link
@@ -612,7 +612,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Cart Side Panel */}
+     
       <div
         ref={cartOverlayRef}
         className="fixed inset-0 z-60 bg-black/40 opacity-0 pointer-events-none transition-opacity"

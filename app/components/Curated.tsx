@@ -12,10 +12,10 @@ export function Curated() {
   const containerRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
   
-  // Bezier curve divider
+
   const dividerRef = useRef<HTMLDivElement>(null);
   const curvePathRef = useRef<SVGPathElement>(null);
-  // mutable ref for the control-point position (avoids re-renders)
+ 
   const cpRef = useRef({ cx: 50, cy: 10 });
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export function Curated() {
     return () => ctx.revert();
   }, []);
 
-  // Bezier curve mouse handlers
+  
   const handleDividerMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!curvePathRef.current || !dividerRef.current) return;
     const rect = dividerRef.current.getBoundingClientRect();
@@ -113,13 +113,13 @@ export function Curated() {
     <section ref={containerRef} className="w-full max-w-7xl mx-auto px-6 md:px-2 py-16 md:py-24 overflow-hidden">
       <div className="flex flex-col md:flex-row items-center justify-between gap-12 md:gap-16 mb-16 md:mb-24">
 
-        {/* Left Content */}
+       
         <div className="w-full md:w-1/2">
-          {/* Desktop Heading */}
+       
           <h2 className="hidden md:block text-[3.5rem] leading-[1.1] font-medium tracking-tight text-[#1a1a1a] mb-6">
             <div className="overflow-hidden py-1"><div className="curated-reveal">Curated to <span className="relative inline-block">
               help you
-              {/* Hand-drawn underline SVG */}
+             
               <svg className="absolute w-full h-[12px] -bottom-1 left-0 z-[1]" viewBox="0 0 200 20" preserveAspectRatio="none" fill="none">
                 <path
                   className="curated-path"
@@ -158,7 +158,6 @@ export function Curated() {
           </div>
         </div>
 
-        {/* Right Content */}
         <div className="w-full md:w-1/2 flex justify-center relative ml-9 md:ml-0">
           <div className="relative w-[300px] h-[300px] md:w-[450px] md:h-[450px] bg-[#c2f866] rounded-full flex items-center justify-center">
             <Image
@@ -169,7 +168,7 @@ export function Curated() {
             />
           </div>
 
-          {/* Floating Badge */}
+       
           <div ref={badgeRef} className="absolute left-[-20px] top-[60%] transform -translate-y-1/2 bg-white px-5 py-4 rounded-2xl shadow-xl border border-gray-100 flex items-center gap-4 z-10">
             <div className="text-[#5b61d6]">
               <FiAward className="text-2xl" />
@@ -182,7 +181,7 @@ export function Curated() {
         </div>
       </div>
 
-      {/* Bottom Logos — Bezier Curve Divider */}
+    
       <div
         ref={dividerRef}
         className="relative pt-10 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4"
@@ -190,7 +189,7 @@ export function Curated() {
         onMouseLeave={handleDividerMouseLeave}
         
       >
-        {/* Interactive SVG bezier line */}
+      
         <div className="absolute top-0 left-0 w-full" style={{ height: '30px', marginTop: '-15px' }}>
           <svg
             className="w-full h-full overflow-visible"
