@@ -5,7 +5,8 @@ import { connectMongoDB } from "@/lib/mongodb";
 import User from "@/models/user";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Provide a fallback string during build time to avoid the "Missing API key" error.
+const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy_key");
 
 export async function POST(req: Request) {
   try {
