@@ -513,16 +513,16 @@ export function Navbar() {
               GET IN TOUCH
             </h3>
             <div className="text-[17px] md:text-xl font-medium leading-relaxed mb-6">
-              <a href="mailto:studio@clikd.co" className="block hover:underline">
-                studio@clikd.co
+              <a href="mailto:palise.watana@gmail.com" className="block hover:underline">
+                palise.watana@gmail.com
               </a>
-              <a href="tel:+14379824412" className="block hover:underline">
-                +1 (437) 982 4412
+              <a href="tel:+66612279966" className="block hover:underline">
+                +66 61 227 9966
               </a>
             </div>
             <div className="text-sm md:text-base font-medium text-zinc-800">
-              42 Mercer Street<br />
-              Toronto, ON M5V
+              Sukhumvit101/1<br />
+              Bangkok, Thailand
             </div>
           </div>
 
