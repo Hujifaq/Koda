@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FiUser, FiLock, FiArrowLeft } from "react-icons/fi";
 import gsap from "gsap";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const gridImages = [
   "https://madewithgsap.com/effects/free001/assets/medias/01.png",
@@ -21,6 +23,7 @@ const gridImages = [
 ];
 
 export default function LoginPage() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -29,9 +32,14 @@ export default function LoginPage() {
 
   // ── Custom cursor effect ──────────────────────────────────────────────────
   useEffect(() => {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) return;
+
     const cursor = cursorRef.current;
     const rightPanel = rightPanelRef.current;
     if (!cursor || !rightPanel) return;
+
+    rightPanel.style.cursor = 'none';
 
     // Use xPercent/yPercent to center the cursor so GSAP x/y doesn't conflict
     // with an inline transform: translate(-50%, -50%)
@@ -135,9 +143,32 @@ export default function LoginPage() {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Logging in with:", { username, password });
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await signIn("credentials", {
+        username,
+        password,
+        redirect: false,
+      });
+
+      if (res?.error) {
+        setError("Invalid username or password");
+      } else {
+        router.push("/");
+        router.refresh();
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -179,6 +210,12 @@ export default function LoginPage() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            {error && (
+              <div className="bg-red-50 text-red-500 p-3 rounded-xl text-sm border border-red-100">
+                {error}
+              </div>
+            )}
+            
             {/* Username Input */}
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
@@ -213,9 +250,10 @@ export default function LoginPage() {
             <div className="mt-2 flex items-center justify-between gap-4">
               <button
                 type="submit"
-                className="bg-black text-white text-[13px] font-bold px-7 py-3 rounded-xl transition-all duration-200 hover:translate-y-[-2px] active:translate-y-0 shadow-sm"
+                disabled={loading}
+                className="bg-black text-white text-[13px] font-bold px-7 py-3 rounded-xl transition-all duration-200 hover:translate-y-[-2px] active:translate-y-0 shadow-sm disabled:opacity-70 disabled:hover:translate-y-0"
               >
-                Sign In
+                {loading ? "Signing in..." : "Sign In"}
               </button>
               <Link
                 href="/forgot-password"
@@ -244,6 +282,7 @@ export default function LoginPage() {
 
           <button
             type="button"
+            onClick={() => signIn("google", { callbackUrl: "/" })}
             className="mt-6 w-full flex items-center justify-center gap-3 rounded-2xl bg-white border border-neutral-200 px-4 py-3.5 text-[14px] font-semibold text-neutral-800 hover:bg-neutral-50 transition-all shadow-sm active:scale-[0.98] cursor-pointer"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -260,7 +299,7 @@ export default function LoginPage() {
       {/* Right Side: Interactive GSAP Grid */}
       <div 
         ref={rightPanelRef}
-        className="hidden lg:block lg:w-[50%] bg-[#0a0a0a] min-h-screen relative overflow-hidden cursor-none"
+        className="hidden lg:block lg:w-[50%] bg-[#0a0a0a] min-h-screen relative overflow-hidden"
       >
         <section ref={containerRef} className="w-full h-full relative grid place-items-center bg-[#0a0a0a]">
           

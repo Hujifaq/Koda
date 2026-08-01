@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
+import { useSession, signOut } from "next-auth/react";
 
 function KodaLogo() {
   return (
@@ -74,6 +75,7 @@ export function Navbar() {
     { label: "FAQ's", href: "/faq" },
     { label: "Contact", href: "/contact" }
   ];
+  const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCompact, setIsCompact] = useState(false);
@@ -141,11 +143,12 @@ export function Navbar() {
     );
 
     if (headerRef.current) {
+      const isMobile = window.innerWidth < 768;
       morphTimeline.to(
         headerRef.current,
         {
-          paddingTop: shouldBeCompact ? 0 : 16,
-          paddingBottom: shouldBeCompact ? 0 : 16,
+          paddingTop: shouldBeCompact ? 0 : (isMobile ? 0 : 16),
+          paddingBottom: shouldBeCompact ? 0 : (isMobile ? 0 : 16),
           duration: 0.7,
           ease: shouldBeCompact ? "back.out(1.4)" : "power2.out",
         },
@@ -388,31 +391,60 @@ export function Navbar() {
               <span className="text-[15px] font-medium">Cart</span>
             </button>
 
-            {/* Login */}
-            <Link href={"/login"}
-              className="flex items-center hover:bg-black/5 rounded-xl px-4 py-2 transition-all duration-200 cursor-pointer"
-              data-nav-action
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.7" />
-                <path
-                  d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                />
-              </svg>
-              <span className="text-sm">Login</span>
-            </Link>
+            {/* Auth Actions */}
+            {status === "authenticated" ? (
+              <>
+                <Link href="/profile"
+                  className="flex items-center hover:bg-black/5 rounded-xl px-4 py-2 transition-all duration-200 cursor-pointer"
+                  data-nav-action
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path
+                      d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"
+                      stroke="currentColor"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <circle cx="12" cy="7" r="4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <span className="text-sm ml-2">Profile</span>
+                </Link>
+                <button
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="rounded-xl bg-black px-5 py-2.5 text-sm font-medium text-white hover:bg-zinc-800 cursor-pointer transition-all duration-200 hover:-translate-y-0.5 inline-flex items-center"
+                  data-nav-action
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link href={"/login"}
+                  className="flex items-center hover:bg-black/5 rounded-xl px-4 py-2 transition-all duration-200 cursor-pointer"
+                  data-nav-action
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <circle cx="12" cy="8" r="4" stroke="currentColor" strokeWidth="1.7" />
+                    <path
+                      d="M5 20c0-3.866 3.134-7 7-7s7 3.134 7 7"
+                      stroke="currentColor"
+                      strokeWidth="1.7"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <span className="text-sm">Login</span>
+                </Link>
 
-            {/* Sign up */}
-            <Link
-              href="/signup"
-              className="rounded-xl bg-black px-5 py-2.5 text-sm font-medium text-white hover:bg-zinc-800 cursor-pointer transition-all duration-200 hover:-translate-y-0.5 inline-flex items-center"
-              data-nav-action
-            >
-              Sign up
-            </Link>
+                <Link
+                  href="/signup"
+                  className="rounded-xl bg-black px-5 py-2.5 text-sm font-medium text-white hover:bg-zinc-800 cursor-pointer transition-all duration-200 hover:-translate-y-0.5 inline-flex items-center"
+                  data-nav-action
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -538,20 +570,43 @@ export function Navbar() {
                 </div>
                 Cart
               </button>
-              <Link
-                href="/login"
-                onClick={() => setIsOpen(false)}
-                className="rounded-xl px-6 py-3 text-sm font-semibold border border-black/20 hover:bg-black hover:text-white transition-all duration-200"
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                onClick={() => setIsOpen(false)}
-                className="rounded-xl bg-[#7c5cff] px-6 py-3 text-sm font-semibold text-white hover:bg-[#6a4de0] transition-all duration-200"
-              >
-                Sign up
-              </Link>
+              {status === "authenticated" ? (
+                <>
+                  <Link
+                    href="/profile"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-xl px-6 py-3 text-sm font-semibold border border-black/20 hover:bg-black hover:text-white transition-all duration-200"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      signOut({ callbackUrl: "/" });
+                    }}
+                    className="rounded-xl bg-[#7c5cff] px-6 py-3 text-sm font-semibold text-white hover:bg-[#6a4de0] transition-all duration-200"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-xl px-6 py-3 text-sm font-semibold border border-black/20 hover:bg-black hover:text-white transition-all duration-200"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-xl bg-[#7c5cff] px-6 py-3 text-sm font-semibold text-white hover:bg-[#6a4de0] transition-all duration-200"
+                  >
+                    Sign up
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

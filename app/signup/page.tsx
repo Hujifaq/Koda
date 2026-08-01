@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FiUser, FiMail, FiLock, FiArrowLeft, FiHome } from "react-icons/fi";
 import gsap from "gsap";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const gridImages = [
   "https://madewithgsap.com/effects/free002/assets/medias/01.png",
@@ -20,6 +22,7 @@ const gridImages = [
 ];
 
 export default function SignupPage() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,10 +35,16 @@ export default function SignupPage() {
 
   // ── Custom cursor effect ──────────────────────────────────────────────────
   useEffect(() => {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) return;
+
     const cursor = cursorRef.current;
     const leftPanel = leftPanelRef.current;
     const homeBtn = homeButtonRef.current;
     if (!cursor || !leftPanel || !homeBtn) return;
+
+    leftPanel.style.cursor = 'none';
+    homeBtn.style.cursor = 'none';
 
     // Silky position tracking via quickTo
     const xTo = gsap.quickTo(cursor, "x", { duration: 0.45, ease: "power3.out" });
@@ -225,9 +234,54 @@ export default function SignupPage() {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Signing up with:", { username, email, password, agree });
+    if (!agree) {
+      setError("You must agree to the privacy policy.");
+      return;
+    }
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+      });
+
+      if (res.ok) {
+        // Sign in user automatically after successful registration
+        const signInRes = await signIn("credentials", {
+          username: email,
+          password,
+          redirect: false,
+        });
+
+        if (signInRes?.error) {
+          setError("Registration successful, but login failed. Please try logging in manually.");
+        } else {
+          router.push("/");
+          router.refresh();
+        }
+      } else {
+        const data = await res.json();
+        setError(data.message || "Something went wrong.");
+      }
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -251,7 +305,7 @@ export default function SignupPage() {
         <Link
           ref={homeButtonRef}
           href="/"
-          className="absolute top-6 right-6 lg:left-6 lg:right-auto z-50 flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 border border-neutral-200/50 backdrop-blur-sm text-neutral-700 text-xs font-semibold shadow-sm transition-all hover:-translate-y-[1px] cursor-none"
+          className="absolute top-6 right-6 lg:left-6 lg:right-auto z-50 flex items-center gap-2 px-4 py-2 rounded-xl bg-white/80 border border-neutral-200/50 backdrop-blur-sm text-neutral-700 text-xs font-semibold shadow-sm transition-all hover:-translate-y-[1px]"
         >
           <FiArrowLeft className="text-sm" />
           Back to Home
@@ -260,7 +314,7 @@ export default function SignupPage() {
         {/* Left Side: GSAP Interactive Panel */}
         <div
           ref={leftPanelRef}
-          className="hidden lg:block lg:w-[50%] bg-[#0a0a0a] min-h-screen relative overflow-hidden cursor-none"
+          className="hidden lg:block lg:w-[50%] bg-[#0a0a0a] min-h-screen relative overflow-hidden"
         >
           <div className="absolute inset-0 opacity-20 pointer-events-none">
             <div className="absolute top-[20%] left-[10%] w-[300px] h-[300px] bg-[#7c5cff] rounded-full blur-[120px]" />
@@ -290,6 +344,12 @@ export default function SignupPage() {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              {error && (
+                <div className="bg-red-50 text-red-500 p-3 rounded-xl text-sm border border-red-100">
+                  {error}
+                </div>
+              )}
+
               {/* Username Input */}
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400">
@@ -358,9 +418,10 @@ export default function SignupPage() {
               <div className="flex items-center justify-between gap-4">
                 <button
                   type="submit"
-                  className="bg-black text-white text-[13px] font-bold px-7 py-3 rounded-xl transition-all duration-200 hover:translate-y-[-2px] active:translate-y-0 cursor-pointer shadow-sm"
+                  disabled={loading}
+                  className="bg-black text-white text-[13px] font-bold px-7 py-3 rounded-xl transition-all duration-200 hover:translate-y-[-2px] active:translate-y-0 cursor-pointer shadow-sm disabled:opacity-70 disabled:hover:translate-y-0"
                 >
-                  Sign up
+                  {loading ? "Signing up..." : "Sign up"}
                 </button>
                 <p className="text-[12px] text-neutral-500">
                   Already have an account?{" "}
@@ -382,6 +443,7 @@ export default function SignupPage() {
 
             <button
               type="button"
+              onClick={() => signIn("google", { callbackUrl: "/" })}
               className="mt-6 w-full flex items-center justify-center gap-3 rounded-2xl bg-white border border-neutral-200 px-4 py-3.5 text-[14px] font-semibold text-neutral-800 hover:bg-neutral-50 transition-all shadow-sm active:scale-[0.98]
               cursor-pointer"
             >

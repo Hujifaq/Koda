@@ -146,9 +146,18 @@ export function JellyCursor() {
   return (
     <>
       <style>{`
-        /* Hide default cursor on this page */
-        html, body, a, [role=button], button, [type=button]:not(:disabled) {
-          cursor: none !important;
+  
+        @media (pointer: fine) {
+          html, body, a, [role=button], button, [type=button]:not(:disabled) {
+            cursor: none !important;
+          }
+        }
+        
+        
+        @media (pointer: coarse), (hover: none) {
+          #jelly-cursor {
+            display: none !important;
+          }
         }
       `}</style>
       <div
