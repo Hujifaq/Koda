@@ -11,14 +11,13 @@ import { JellyCursor } from "../components/JellyCursor";
 import TextGradientScroll from "../components/TextGradientScroll";
 import SliderSection from "../components/SliderSection";
 import SvgDraw from "../components/SvgDraw";
+import { KodaSignature } from "../components/KodaSignature";
 
 // Dynamically import ZoomParallax to avoid SSR issues with framer-motion
 const ZoomParallaxSection = dynamic(() => import("../components/ZoomParallax"), { ssr: false });
 
 export default function CareersPage() {
   const text1Ref = useRef<HTMLDivElement>(null);
-  const text2Ref = useRef<HTMLDivElement>(null);
-  const maskTextRef = useRef<HTMLDivElement>(null);
   const subTextRef = useRef<HTMLDivElement>(null);
   const maskContainerRef = useRef<HTMLDivElement>(null);
   const missionContainerRef = useRef<HTMLDivElement>(null);
@@ -40,18 +39,6 @@ export default function CareersPage() {
         ease: "power4.out",
         delay: 0.2
       }
-    )
-    .fromTo(
-      [text2Ref.current, maskTextRef.current],
-      { y: 150, opacity: 0, rotateZ: 5 },
-      {
-        y: 0,
-        opacity: 1,
-        rotateZ: 0,
-        duration: 1.2,
-        ease: "power4.out",
-      },
-      "<0.15"
     )
     .fromTo(
         subTextRef.current,
@@ -151,10 +138,8 @@ export default function CareersPage() {
                 We are
               </div>
             </div>
-            <div className="overflow-hidden pb-2 md:pb-4 pointer-events-none">
-              <div ref={text2Ref} className="text-[8rem] md:text-[16rem] transform origin-bottom-left">
-                Koda
-              </div>
+            <div className="pb-2 md:pb-4 pointer-events-none">
+              <KodaSignature />
             </div>
           </div>
 
